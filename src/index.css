@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .option {
+        @apply hover:text-red-400 active:translate-y-0.5 active:text-red-600 hover:-translate-y-[2px]
+    }
+}
+
 @font-face {
     font-family: 'Arcade Classic';
     src: url("/fonts/arcadeclassic/ARCADECLASSIC.TTF");

@@ -10,10 +10,6 @@ const Board = () => {
         if (game.board && game.board.length > 0)
         localStorage.setItem('game', JSON.stringify(game));
     }, [game]);
-    
-    if (!game.isReady) {
-        return <div>Loading...</div>;
-    }
 
    return (
     <div className={`w-fit h-fit border-[6px] m-2 border-gray-900 rounded-lg`}>
@@ -28,8 +24,8 @@ const Board = () => {
                         key={`${r}_${c}`}
                         >
                             <div 
-                                className={`border border-gray-400 flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9  cursor-pointer lg:text-2xl text-xl
-                                    ${ game.board[r][c]   
+                                className={`border border-gray-400 flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9  cursor-pointer lg:text-xl text-lg text-gray-800 pt-1 font-playwrite font-medium
+                                    ${ game.isRunning && game.board[r][c]   
                                         ? 'bg-slate-200 hover:bg-slate-200' 
                                         : (game.selectedSquare.r == r && game.selectedSquare.c == c) 
                                             ? 'bg-slate-100 border-[3px] border-[#344C64]'
@@ -72,7 +68,7 @@ const Board = () => {
                                             }
                                         }}
                                         >
-                                {game.board[r][c] ? game.board[r][c] : ""}
+                                {game.isRunning && game.board[r][c] ? game.board[r][c] : ""}
                             </div>
                         </div>
                     ))}
