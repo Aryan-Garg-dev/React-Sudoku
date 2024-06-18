@@ -1,0 +1,10 @@
+## Tech Stack 
+> React-timer-hook (for timer) (3/5 based on time) 
+> use-sound (for playing audio effects)
+> Sudoku Api (https://sudoku-api.vercel.app/api/dosuku) (for board)
+> Tailwind CSS & flowbite, React Icons, MUI, 
+> framer-motion
+> React JS
+> React-toastify, react-secure-storage, js-cookie
+> Custom-Cursor (react-icons)
+> React-tweet, React-share, React-social-media-embed

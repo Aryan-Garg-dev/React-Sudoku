@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+FR+Moderne:wght@100..400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Arcade Classic';
+    src: url("/fonts/arcadeclassic/ARCADECLASSIC.TTF");
+}
+
+@font-face {
+    font-family: "Pacfont";
+    src: url("/fonts/pacfont/PAC-FONT.TTF");
+}
+
+@font-face {
+   font-family: "Crackman";
+   src: url('/fonts/crackman/Crackman.otf') 
+}
+
+@font-face {
+    font-family: "Zero Velocity Brk";
+    src: url("/fonts/zero-velocity-brk/zerovelo.ttf");
+}
+
+@font-face {
+    font-family: "Dp Comic";
+    src: url("/fonts/dpcomic/dpcomic.ttf");
+}
+
+@font-face {
+    font-family: 'Road-Rage';
+    src: url("/fonts/road-rage/Road_Rage/Road_Rage.otf");
+}
+
+@font-face {
+    font-family: 'Saucer BB';
+    src: url("/fonts/saucer-bb/SaucerBB.ttf");
+}
+
+@font-face {
+    font-family: "Winter Vista";
+    src: url('/fonts/winter-vista/Winter\ Vista.otf');
+}
