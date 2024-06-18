@@ -37,7 +37,7 @@ const Board = () => {
                                         key={r*9+c} 
                                         onClick={()=>{
                                             if (!game.selectedNumber){
-                                                if (game.selectedSquare.r != r || game.selectedSquare != c){
+                                                if (game.selectedSquare.r != r || game.selectedSquare.c != c){
                                                     setGame({
                                                         ...game, 
                                                         selectedSquare: { r, c },

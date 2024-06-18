@@ -59,7 +59,7 @@ const Numbers = () => {
             
             key={index}
             onClick={()=>{
-                if (game.selectedSquare.r != null && game.selectedSquare.c != null){
+                if (game.selectedSquare.r != null && game.selectedSquare.c != null && !isDisabled(index+1)){
                     const { r, c } = game.selectedSquare;
                     if (index+1 == game.solution[r][c]){
                         const newBoard = _.cloneDeep(game.board);
