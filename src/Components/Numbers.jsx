@@ -29,6 +29,7 @@ const Numbers = () => {
         if (isDisabled(game.selectedNumber)){
             setGame({
                 ...game,
+                selectedNumber: null,
                 selectedSquaresForNumber: [],
             })
         }
