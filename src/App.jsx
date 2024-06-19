@@ -18,18 +18,27 @@ function App() {
       const { data, board, solution } = createNewGame(difficulty);
       const newGame = {
         ...game,
+        data,
+
+        board,
+        solution,
+
         isRunning: true,
         isOver: false,
-        selectedNumber: null,
-        selectedSquare: { r: null, c: null },
-        selectedSquaresForNumber: [],
-        // selectedDifficulty: difficulty,
-        hightlightSquares: false,
-        hightlightMoves: false,
         errorCount: 0,
-        board,
-        data,
-        solution,
+        rating: 0,
+
+        hightlightMoves: false,
+
+        selectedNumber: null,
+        selectedSquaresForNumber: [],
+
+        selectedSquare: { r: null, c: null },
+        selectedNumbersForSquare: [],
+        validNumbersForSquare: [],
+
+        disabledNumbers: [],
+
       };
       setGame(newGame);
       return newGame;
@@ -71,7 +80,7 @@ function App() {
     if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty ) {
       generateNewGame(game.selectedDifficulty);
     }
-  }, [game.selectedDifficulty, generateNewGame]);
+  }, [game.selectedDifficulty, generateNewGame, game.data.difficulty]);
 
   useEffect(() => {
     if (game.isRunning && game.board.length)

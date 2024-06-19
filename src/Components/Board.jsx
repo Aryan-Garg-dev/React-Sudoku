@@ -27,7 +27,7 @@ const Board = () => {
                                             ? 'bg-slate-100 border-[4px] border-[#344C64] text-gray-800 '
                                             : game.selectedSquaresForNumber.find(square=>square.r == r && square.c == c)
                                                 ? 'bg-red-200 text-gray-800'
-                                                : 'hover:bg-slate-100 text-gray-800'}
+                                                : 'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400'}
                                         `} 
                                         
                                         key={r*9+c} 

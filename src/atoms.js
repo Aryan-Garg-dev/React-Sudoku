@@ -23,7 +23,8 @@ export const gameStateAtom = atom({
         isOver: false,  // (true || false)
         rating: 0,
         errorCount: 0, // (errors)
-        easyMode: false,
+        highlightSquares: true,
+        highlightMoves: false,
 
         selectedNumber: null, // (1-9)
         selectedSquaresForNumber: [], // (wrong sqaures selected in board to fill this number with)

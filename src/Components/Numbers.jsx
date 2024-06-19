@@ -13,27 +13,24 @@ const Numbers = () => {
     }, [game.board, game.solution])
     
     useEffect(()=>{
-        const disabledNumbers = [];
-        for (let i = 1; i <= 9; i++){
-            if (isDisabled(i)){
-                disabledNumbers.push(i);
-            }
+        const disabledNumbers = _.range(1, 9).filter(num=>isDisabled(num));
+        if (disabledNumbers.length){
+            setGame(game=>({
+                ...game,
+                disabledNumbers,
+            }))
         }
-        setGame({
-            ...game,
-            disabledNumbers,
-        })
-    }, [isDisabled, setGame])
+    }, [isDisabled, setGame, game.board])
 
     useEffect(()=>{
         if (isDisabled(game.selectedNumber)){
-            setGame({
+            setGame(game=>({
                 ...game,
                 selectedNumber: null,
                 selectedSquaresForNumber: [],
-            })
+            }))
         }
-    }, [isDisabled, setGame]);
+    }, [isDisabled, setGame, game.selectedNumber]);
 
     useEffect(()=>{
         // [X] Sqaure Checks [X] line checks
@@ -61,7 +58,6 @@ const Numbers = () => {
             for (let j = 0; j < 9; j++){
                 if (validNumbers.includes(game.board[r][j])){
                     const index =validNumbers.indexOf(game.board[r][j])
-                    console.log(validNumbers[index])
                     validNumbers.splice(index, 1)
                 }
             }
@@ -73,11 +69,6 @@ const Numbers = () => {
         }
     }, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame])
     
-    // useEffect(() => {
-    //     if (game.isRunning && game.board.length)
-    //     localStorage.setItem('game', JSON.stringify(game));
-    // }, [game]);
-
   return (
     <div className='flex w-fit gap-[4px] m-2'>
         {_.times(9, index=>(
