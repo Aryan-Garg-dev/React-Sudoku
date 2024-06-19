@@ -1,16 +1,25 @@
 import { atom } from 'recoil'
+import { createNewGame } from './functions'
+
+const { data, board, solution } = createNewGame();
+
+// const { data, board, solution } = JSON.parse(localStorage.getItem('game'));
 
 export const gameStateAtom = atom({
     key: 'gameStateAtom',
     default: {
-        data: {
-            puzzle: "",
-            solution: "",
-            difficulty: ""
-        },
+        // data: {
+        //     puzzle: "",
+        //     solution: "",
+        //     difficulty: ""
+        // },
 
-        board: [], // [[],[],[]]
-        solution: [], // [[],[],[]] 
+        data: data,
+
+        // board: [], // [[],[],[]]
+        board,
+        // solution: [], // [[],[],[]] 
+        solution,
         selectedDifficulty: "", // (random: "" || easy || medium || hard || expert)
         isRunning: false, // (true || false)
         isOver: false,  // (true || false)

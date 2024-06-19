@@ -1,15 +1,10 @@
 import _  from 'lodash'
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 const Board = () => {
     const [ game, setGame ] = useRecoilState(gameStateAtom)
-
-    useEffect(() => {
-        if (game.board && game.board.length > 0)
-        localStorage.setItem('game', JSON.stringify(game));
-    }, [game]);
 
    return (
     <div className={`w-fit h-fit border-[6px] m-2 border-gray-900 rounded-lg`}>

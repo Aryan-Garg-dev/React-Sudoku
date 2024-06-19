@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil"
 import { gameStateAtom } from "../atoms"
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const difficultyOptions = {
     'easy': 'rookie',
@@ -12,9 +12,10 @@ const difficultyOptions = {
 const Difficulty = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
 
-    useEffect(() => {
-        localStorage.setItem('game', JSON.stringify(game));
-    }, [game]);
+    // useEffect(() => {
+    //     if (game.isRunning && game.board.length)
+    //     localStorage.setItem('game', JSON.stringify(game));
+    // }, [game]);
 
   return (
     <div className="w-fit h-fit">

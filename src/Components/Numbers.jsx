@@ -35,10 +35,10 @@ const Numbers = () => {
         }
     }, [isDisabled, setGame]);
     
-    useEffect(() => {
-        if (game.board && game.board.length)
-        localStorage.setItem('game', JSON.stringify(game));
-    }, [game]);
+    // useEffect(() => {
+    //     if (game.isRunning && game.board.length)
+    //     localStorage.setItem('game', JSON.stringify(game));
+    // }, [game]);
 
   return (
     <div className='flex w-fit gap-[4px] m-2'>

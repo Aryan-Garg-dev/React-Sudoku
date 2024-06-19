@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Appbar from "./Components/Appbar"
 import Board from "./Components/Board"
 // import Timer from "./Components/Timer"
@@ -13,45 +13,69 @@ function App() {
 
   const [ game, setGame ] = useRecoilState(gameStateAtom)
 
-  useEffect(()=>{
-    if (!localStorage.getItem('game')){
-      const prevGameState = JSON.parse(localStorage.getItem('game'));
-      setGame(prevGameState);
-      console.log("game");
-    } else {
-      console.log("new");
-      const { data, board, solution } = createNewGame(game.selectedDifficulty);
-      setGame(game=>({
+  const generateNewGame = useCallback(
+    (difficulty) => {
+      const { data, board, solution } = createNewGame(difficulty);
+      const newGame = {
         ...game,
         isRunning: true,
         isOver: false,
         selectedNumber: null,
         selectedSquare: { r: null, c: null },
-        disabledNumbers: [],
+        selectedSquaresForNumber: [],
+        // selectedDifficulty: difficulty,
+        errorCount: 0,
         board,
         data,
         solution,
-      }))
-    }
-  }, [game.selectedDifficulty, setGame])
+      };
+      setGame(newGame);
+      return newGame;
+    },
+    [setGame]
+  );
 
-  useEffect(()=>{
-    if (_.flattenDeep(game.board).join("") === game.data.solution) {
-      setGame({
+  useEffect(() => {
+    const savedGame = JSON.parse(localStorage.getItem("game"));
+    if (
+      !savedGame ||
+      !savedGame.board.length ||
+      !savedGame.isRunning
+    ) {
+      const newGame = generateNewGame(game.selectedDifficulty);
+      localStorage.setItem("game", JSON.stringify(newGame));
+    } else {
+      setGame(savedGame);
+    }
+  }, [generateNewGame]);
+
+  useEffect(() => {
+    if (_.flattenDeep(game.board).join("") === game.solution.join("")) {
+      const newGame = {
         ...game,
         isOver: true,
         isRunning: false,
-      })
+      };
+      setGame(newGame);
+      localStorage.setItem("game", JSON.stringify(newGame));
     }
-  }, [setGame])
-  
+  }, [game.board, game.solution, setGame]);
+
+  useEffect(() => {
+    if (game.selectedDifficulty) {
+      const newGame = generateNewGame(game.selectedDifficulty);
+      localStorage.setItem("game", JSON.stringify(newGame));
+    }
+  }, [game.selectedDifficulty, generateNewGame]);
+
+
   return (
     <>
       <div className="h-screen w-full">
         <Appbar />
         <div className="grid grid-cols-2">
           <div>
-            <Board />
+            {game.isRunning && <Board />}
             <Numbers />
           </div>
           <div>
