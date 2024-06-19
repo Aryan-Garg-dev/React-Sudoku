@@ -34,6 +34,26 @@ const Numbers = () => {
             })
         }
     }, [isDisabled, setGame]);
+
+    useEffect(()=>{
+        const r = game.selectedSquare.r;
+        const c = game.selectedSquare.c;
+        if (r != null && c != null){
+            const validNumbers = _.range(1, 10);
+            for (let i = 0; i < 3; i++){
+                for (let j = 0; j < 3; j++){
+                    const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
+                    if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
+                        validNumbers.splice(validNumbers.indexOf(game.board[x+i][y+j]), 1)
+                    }
+                }
+            }
+            setGame(game=>({
+                ...game,
+                validNumbersForSquare: validNumbers,
+            }))
+        }
+    }, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame])
     
     // useEffect(() => {
     //     if (game.isRunning && game.board.length)
@@ -49,11 +69,13 @@ const Numbers = () => {
                 select-none
                 ${game.selectedNumbersForSquare.includes(index+1)
                     ? 'border-2 bg-red-200 border-red-400'
-                    :  isDisabled(index+1)
-                        ? 'border-2 border-gray-300 bg-gray-200 shadow-none text-gray-600'
-                        : game.selectedNumber == index+1
-                            ? 'shadow-none border-2 bg-slate-700 border-slate-600 text-white active:translate-y-0.5'
-                            :'border-2 active:translate-y-0.5 shadow-slate-600 border-gray-500 hover:border-gray-600 hover:bg-slate-300 active:shadow-none'
+                    : game.validNumbersForSquare.includes(index+1)
+                        ? 'bg-[#FFEEA9] border-2 border-[#FF7D29] shadow-md shadow-slate-600 active:translate-y-0.5 hover:bg-[#FFD966] text-red-950'
+                        :  isDisabled(index+1)
+                            ? 'border-2 border-gray-300 bg-gray-200 shadow-none text-gray-600'
+                            : game.selectedNumber == index+1
+                                ? 'shadow-none border-2 bg-slate-700 border-slate-600 text-white active:translate-y-0.5'
+                                :'border-2 shadow-slate-600 border-gray-500 hover:border-gray-600 hover:bg-slate-200 active:shadow-none'
                 }
                 `}
             
@@ -68,7 +90,8 @@ const Numbers = () => {
                             ...game, 
                             board: newBoard, 
                             selectedSquare: { r: null, c: null },
-                            selectedNumbersForSquare: []
+                            selectedNumbersForSquare: [],
+                            validNumbersForSquare: [],
                         })
                     } else {
                         if (!game.selectedNumbersForSquare.includes(index+1) && !game.disabledNumbers.includes(index+1))

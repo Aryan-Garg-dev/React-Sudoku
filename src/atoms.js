@@ -23,12 +23,14 @@ export const gameStateAtom = atom({
         isOver: false,  // (true || false)
         rating: 0,
         errorCount: 0, // (errors)
+        easyMode: false,
 
         selectedNumber: null, // (1-9)
         selectedSquaresForNumber: [], // (wrong sqaures selected in board to fill this number with)
 
         selectedSquare: { r: null, c: null }, // (square selected in board to be filled)
         selectedNumbersForSquare: [], // (wrong numbers selected to fill in that square)
+        validNumbersForSquare: [],
 
         disabledNumbers: [], // (numbers that can't be filled anymore)
 
