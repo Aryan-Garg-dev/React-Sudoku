@@ -36,6 +36,7 @@ const Numbers = () => {
     }, [isDisabled, setGame]);
 
     useEffect(()=>{
+        // [X] Sqaure Checks [X] line checks
         const r = game.selectedSquare.r;
         const c = game.selectedSquare.c;
         if (r != null && c != null){
@@ -44,10 +45,27 @@ const Numbers = () => {
                 for (let j = 0; j < 3; j++){
                     const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
                     if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
-                        validNumbers.splice(validNumbers.indexOf(game.board[x+i][y+j]), 1)
+                        const index = validNumbers.indexOf(game.board[x+i][y+j]);
+                        validNumbers.splice(index, 1)
                     }
                 }
             }
+            
+            for (let i = 0; i < 9; i++){
+                if (validNumbers.includes(game.board[i][c])){
+                    const index =validNumbers.indexOf(game.board[i][c])
+                    validNumbers.splice(index, 1)
+                }
+            }
+
+            for (let j = 0; j < 9; j++){
+                if (validNumbers.includes(game.board[r][j])){
+                    const index =validNumbers.indexOf(game.board[r][j])
+                    console.log(validNumbers[index])
+                    validNumbers.splice(index, 1)
+                }
+            }
+
             setGame(game=>({
                 ...game,
                 validNumbersForSquare: validNumbers,
@@ -69,7 +87,7 @@ const Numbers = () => {
                 select-none
                 ${game.selectedNumbersForSquare.includes(index+1)
                     ? 'border-2 bg-red-200 border-red-400'
-                    : game.validNumbersForSquare.includes(index+1)
+                    : game.validNumbersForSquare.includes(index+1) //highlightMoves
                         ? 'bg-[#FFEEA9] border-2 border-[#FF7D29] shadow-md shadow-slate-600 active:translate-y-0.5 hover:bg-[#FFD966] text-red-950'
                         :  isDisabled(index+1)
                             ? 'border-2 border-gray-300 bg-gray-200 shadow-none text-gray-600'

@@ -20,7 +20,7 @@ const Board = () => {
                             <div 
                                 className={`border border-gray-400 flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9  cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium
                                     ${ game.board.length && game.board[r][c]   
-                                        ? game.selectedNumber === game.board[r][c]  //game.easyMode
+                                        ? game.selectedNumber === game.board[r][c]  //hightlightSqaures
                                             ? 'border-4 border-slate-500 bg-[#344C64] text-[#E2DFD0]'
                                             :'bg-slate-200 hover:bg-slate-200 text-gray-800' 
                                         : (game.selectedSquare.r == r && game.selectedSquare.c == c) 

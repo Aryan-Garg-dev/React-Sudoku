@@ -24,6 +24,8 @@ function App() {
         selectedSquare: { r: null, c: null },
         selectedSquaresForNumber: [],
         // selectedDifficulty: difficulty,
+        hightlightSquares: false,
+        hightlightMoves: false,
         errorCount: 0,
         board,
         data,
