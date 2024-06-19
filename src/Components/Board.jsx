@@ -33,7 +33,7 @@ const Board = () => {
                                         key={r*9+c} 
                                         onClick={()=>{
                                             if (!game.selectedNumber){
-                                                if (game.selectedSquare.r != r || game.selectedSquare.c != c){
+                                                if ((game.selectedSquare.r != r || game.selectedSquare.c != c) && game.data.puzzle[r*9+c]=='-'){
                                                     setGame({
                                                         ...game, 
                                                         selectedSquare: { r, c },
@@ -44,6 +44,7 @@ const Board = () => {
                                                         ...game, 
                                                         selectedSquare: { r: null, c: null },
                                                         selectedNumbersForSquare: [],
+                                                        validNumbersForSquare: [],
                                                     });
                                                 }  
                                             } else {
