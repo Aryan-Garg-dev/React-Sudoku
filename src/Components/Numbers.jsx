@@ -50,7 +50,7 @@ const Numbers = () => {
                 ${game.selectedNumbersForSquare.includes(index+1)
                     ? 'border-2 bg-red-200 border-red-400'
                     :  isDisabled(index+1)
-                        ? 'border-2 border-gray-300 bg-gray-200 shadow-none '
+                        ? 'border-2 border-gray-300 bg-gray-200 shadow-none text-gray-600'
                         : game.selectedNumber == index+1
                             ? 'shadow-none border-2 bg-slate-700 border-slate-600 text-white active:translate-y-0.5'
                             :'border-2 active:translate-y-0.5 shadow-slate-600 border-gray-500 hover:border-gray-600 hover:bg-slate-300 active:shadow-none'

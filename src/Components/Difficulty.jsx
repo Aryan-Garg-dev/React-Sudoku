@@ -12,10 +12,6 @@ const difficultyOptions = {
 const Difficulty = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
 
-    // useEffect(() => {
-    //     if (game.isRunning && game.board.length)
-    //     localStorage.setItem('game', JSON.stringify(game));
-    // }, [game]);
 
   return (
     <div className="w-fit h-fit">

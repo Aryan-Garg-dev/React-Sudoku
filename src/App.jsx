@@ -32,7 +32,7 @@ function App() {
       setGame(newGame);
       return newGame;
     },
-    [setGame]
+    [setGame, game.selectedDifficulty]
   );
 
   useEffect(() => {
@@ -47,10 +47,14 @@ function App() {
     } else {
       setGame(savedGame);
     }
-  }, [generateNewGame]);
+  }, [setGame]);
 
   useEffect(() => {
-    if (_.flattenDeep(game.board).join("") === game.solution.join("")) {
+    if (
+        game.board.length 
+        && game.solution.length 
+        && _.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("")
+      ) {
       const newGame = {
         ...game,
         isOver: true,
@@ -62,12 +66,15 @@ function App() {
   }, [game.board, game.solution, setGame]);
 
   useEffect(() => {
-    if (game.selectedDifficulty) {
-      const newGame = generateNewGame(game.selectedDifficulty);
-      localStorage.setItem("game", JSON.stringify(newGame));
+    if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty ) {
+      generateNewGame(game.selectedDifficulty);
     }
   }, [game.selectedDifficulty, generateNewGame]);
 
+  useEffect(() => {
+    if (game.isRunning && game.board.length)
+    localStorage.setItem('game', JSON.stringify(game));
+  }, [game]);
 
   return (
     <>
@@ -75,7 +82,7 @@ function App() {
         <Appbar />
         <div className="grid grid-cols-2">
           <div>
-            {game.isRunning && <Board />}
+            <Board />
             <Numbers />
           </div>
           <div>
