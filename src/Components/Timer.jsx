@@ -1,49 +1,83 @@
-import { useTimer } from 'react-timer-hook';
-import Proptypes from 'prop-types'
+import { useState, useEffect } from 'react';
+// import Proptypes from 'prop-types'
+import { FaPlay, FaPause } from 'react-icons/fa'
+import { VscDebugRestart } from "react-icons/vsc";
 
-MyTimer.propTypes = {
-    expiryTimestamp: Proptypes.number
-}
+/**
+ * @todo 
+ * timer should also be stored in game state
+ * time limit will be passed 
+ * Progress will be seperate component (may be circular with star in them)
+ * integrate timer with game state
+ * on reset, reset the everything except data,
+ */
 
-function MyTimer({ expiryTimestamp }) {
-  const {
-    // totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    // isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+const Timer = () => {
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
+  useEffect(() => {
+    let interval = null;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTime(prevTime => prevTime + 1);
+      }, 1000);
+    } else if (!isRunning && time !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, time]);
+
+  const formatTime = (time) => {
+    const getSeconds = (time % 60).toString().padStart(2, '0');
+    const getMinutes = Math.floor(time / 60).toString().padStart(2, '0');
+    const getHours = Math.floor(time / 3600).toString().padStart(2, '0');
+    return `${getHours}:${getMinutes}:${getSeconds}`;
+  };
+
+  const calculateWidth = () => {
+    const percentage = (time / 60) * 100;
+    return `${Math.floor(percentage)}%`;
+  };
 
   return (
-    <div style={{textAlign: 'center'}}>
-      <div style={{fontSize: '25px'}}>
-        <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <div className="text-4xl font-mono">{formatTime(time)}</div>
+      <div className="mt-4">
+        { !isRunning 
+        ? <button
+            className="px-4 py-2 m-2 text-white bg-green-500 rounded hover:bg-green-600"
+            onClick={() => setIsRunning(true)}
+          >
+            <FaPlay />
+          </button>
+        : <button
+            className="px-4 py-2 m-2 text-white bg-red-500 rounded hover:bg-red-600"
+            onClick={() => setIsRunning(false)}
+          >
+            <FaPause />
+          </button>
+        }
+        <button
+          className="px-4 py-2 m-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          onClick={() => { setTime(0); }}
+        >
+          <VscDebugRestart />
+        </button>
       </div>
-      <button onClick={start} className='p-2 border mx-1 rounded-lg border-slate-400'>Start</button>
-      <button onClick={pause} className='p-2 border mx-1 rounded-lg border-slate-400'>Pause</button>
-      <button onClick={resume} className='p-2 border mx-1 rounded-lg border-slate-400'>Resume</button>
-      <button onClick={() => {
-        // Restarts to 5 minutes timer
-        const time = new Date();
-        time.setSeconds(time.getSeconds() + 60);
-        restart(time)
-      }}  className='p-2 border mx-1 rounded-lg border-slate-400' >Restart</button>
+      {/* Progress Bar */}
+      <div className='w-24 mt-4'>
+        <div className='h-3 w-full bg-gray-100 rounded-full'>
+        <div
+            className='h-3 bg-slate-800 rounded-full'
+            style={{ width : calculateWidth() }} 
+          >          
+          </div>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-export default function Timer() {
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 60); // 10 minutes timer
-  return (
-    <div>
-      <MyTimer expiryTimestamp={time} />
-    </div>
-  );
-}
+
+export default Timer;

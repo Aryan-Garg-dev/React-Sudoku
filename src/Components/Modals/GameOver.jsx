@@ -1,7 +1,7 @@
 
 const GameOver = () => {
   return (
-    <div className="absolute top-0 w-screen h-screen bg-gray-800 bg-opacity-20 flex justify-center items-center">
+    <div className="absolute top-0 w-screen h-screen bg-[#344C64] bg-opacity-20 flex justify-center items-center">
         <div className="relative lg:w-[40%] md:w-[50%] lg:h-[80%] md:h-[80%] bg-[#DC6B19] border-[6px] border-[#6C0345] rounded-2xl p-1">
         <div className="h-full w-full bg-[#FFEEA9] border-[6px] border-[#F7C566] rounded-2xl flex flex-col items-center">
             <div className="mt-2 font-copyduck text-[70px] text-red-800">Game Over</div>
