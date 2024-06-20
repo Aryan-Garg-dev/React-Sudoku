@@ -14,7 +14,7 @@ const Numbers = () => {
                 select-none
                 ${game.selectedNumbersForSquare.includes(index+1)
                     ? 'border-2 bg-red-200 border-red-400'
-                    : game.validNumbersForSquare.includes(index+1) //highlightMoves
+                    : game.validNumbersForSquare.includes(index+1) && game.highlightMoves
                         ? 'bg-[#FFEEA9] border-2 border-[#FF7D29] shadow-md shadow-slate-600 active:translate-y-0.5 hover:bg-[#FFD966] text-red-950'
                         :  game.disabledNumbers.includes(index+1)
                             ? 'border-2 border-gray-300 bg-gray-200 shadow-none text-gray-600'

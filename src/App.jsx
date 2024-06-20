@@ -30,7 +30,7 @@ function App() {
         errorCount: 0,
         rating: 0,
 
-        hightlightMoves: false,
+        highlightMoves: false,
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
@@ -95,62 +95,66 @@ const isDisabled = useCallback(query=>{
   
 //Numbers (array of disabled numbers)
 useEffect(()=>{
+  if (game.isRunning){
     const disabledNumbers = _.range(1, 9).filter(num=>isDisabled(num));
     if (disabledNumbers.length){
-        setGame(game=>({
-            ...game,
-            disabledNumbers,
-        }))
+      setGame(game=>({
+        ...game,
+        disabledNumbers,
+      }))
     }
-}, [isDisabled, setGame, game.board])
+  }
+}, [isDisabled, setGame, game.board, game.isRunning])
 
 //Numbers (reseet selected squares and selected number if it is disabled)
 useEffect(()=>{
-    if (isDisabled(game.selectedNumber)){
+    if (game.isRunning && isDisabled(game.selectedNumber)){
         setGame(game=>({
             ...game,
             selectedNumber: null,
             selectedSquaresForNumber: [],
         }))
     }
-}, [isDisabled, setGame, game.selectedNumber]);
+}, [isDisabled, setGame, game.selectedNumber, game.isRunning]);
 
 //Numbers (move hints for selected square)
 useEffect(()=>{
+  if (game.isRunning){
     const r = game.selectedSquare.r;
     const c = game.selectedSquare.c;
     if (r != null && c != null){
-        const validNumbers = _.range(1, 10);
-        for (let i = 0; i < 3; i++){
-            for (let j = 0; j < 3; j++){
-                const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
-                if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
-                    const index = validNumbers.indexOf(game.board[x+i][y+j]);
-                    validNumbers.splice(index, 1)
-                }
-            }
+      const validNumbers = _.range(1, 10);
+      for (let i = 0; i < 3; i++){
+        for (let j = 0; j < 3; j++){
+          const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
+          if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
+            const index = validNumbers.indexOf(game.board[x+i][y+j]);
+            validNumbers.splice(index, 1)
+          }
         }
+      }
         
-        for (let i = 0; i < 9; i++){
-            if (validNumbers.includes(game.board[i][c])){
-                const index =validNumbers.indexOf(game.board[i][c])
-                validNumbers.splice(index, 1)
-            }
+      for (let i = 0; i < 9; i++){
+        if (validNumbers.includes(game.board[i][c])){
+          const index =validNumbers.indexOf(game.board[i][c])
+          validNumbers.splice(index, 1)
         }
-
-        for (let j = 0; j < 9; j++){
-            if (validNumbers.includes(game.board[r][j])){
-                const index =validNumbers.indexOf(game.board[r][j])
-                validNumbers.splice(index, 1)
-            }
+      }
+          
+      for (let j = 0; j < 9; j++){
+        if (validNumbers.includes(game.board[r][j])){
+          const index =validNumbers.indexOf(game.board[r][j])
+          validNumbers.splice(index, 1)
         }
-
-        setGame(game=>({
-            ...game,
-            validNumbersForSquare: validNumbers,
-        }))
+      }
+            
+      setGame(game=>({
+        ...game,
+        validNumbersForSquare: validNumbers,
+      }))
     }
-}, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame])
+  }
+}, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning])
 
 // (storing game state after every state changes)
 useEffect(() => {
@@ -167,9 +171,21 @@ useEffect(() => {
             <Board />
             <Numbers />
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <Difficulty />
-            <Toggle text={'Moves'} />
+            <div>
+              <label className="font-playwrite text-xs font-semibold text-[#6C3428]">Highlight</label>
+              <div className="flex gap-3 mt-1">
+                <Toggle text={'Sqaures'} checked={game.highlightSquares} onClick={()=>setGame(game=>({
+                  ...game,
+                  highlightSquares: !game.highlightSquares,
+                }))} />
+                <Toggle text={'Moves'} checked={game.highlightMoves} onClick={()=>setGame(game=>({
+                  ...game,
+                  highlightMoves: !game.highlightMoves,
+                }))} />
+              </div>
+            </div>
           </div>
         </div>
         {/* <Timer /> */}
