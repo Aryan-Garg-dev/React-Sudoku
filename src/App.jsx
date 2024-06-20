@@ -8,7 +8,7 @@ import { gameStateAtom } from "./atoms";
 import Difficulty from "./Components/Difficulty";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
-import { Toggle } from "./Components/Toggle";
+import Highlight from "./Components/Highlight";
 
 function App() {
 
@@ -173,19 +173,7 @@ useEffect(() => {
           </div>
           <div className="flex flex-col gap-3">
             <Difficulty />
-            <div>
-              <label className="font-playwrite text-xs font-semibold text-[#6C3428]">Highlight</label>
-              <div className="flex gap-3 mt-1">
-                <Toggle text={'Sqaures'} checked={game.highlightSquares} onClick={()=>setGame(game=>({
-                  ...game,
-                  highlightSquares: !game.highlightSquares,
-                }))} />
-                <Toggle text={'Moves'} checked={game.highlightMoves} onClick={()=>setGame(game=>({
-                  ...game,
-                  highlightMoves: !game.highlightMoves,
-                }))} />
-              </div>
-            </div>
+            <Highlight />
           </div>
         </div>
         {/* <Timer /> */}

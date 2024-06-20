@@ -14,14 +14,13 @@ const Difficulty = () => {
 
 
   return (
-    <div className="w-fit h-fit">
+    <div className="w-fit h-fit relative group">
         <label className="font-playwrite text-xs font-semibold text-[#6C3428]">Difficulty</label>
-        <div className='group min-w-40 mt-1'>
+        <div className='relative min-w-40 mt-1'>
             <div className="w-full min-w-32 p-1 px-4 rounded-xl mb-1 border-[3px]
              border-red-800 text-[#973131] bg-[#F5E7B2] font-roadrage text-xl text-center" >
                 {difficultyOptions[game.selectedDifficulty] || 'Challenge'}</div>
-            <div className="hidden group-hover:flex flex-col border-[3px] border-red-800 text-[#973131] text-xl 
-        font-arcade bg-[#F5E7B2] p-2 px-4 w-full cursor-pointer select-none">
+            <div className="absolute hidden group-hover:flex flex-col border-[3px] border-red-800 text-[#973131] text-xl font-arcade bg-[#F5E7B2] p-2 px-4 w-full cursor-pointer select-none z-10">
                 {Object.keys(difficultyOptions).map(key=>{
                     if (!game.selectedDifficulty || key != game.selectedDifficulty){
                         return <div 
