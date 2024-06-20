@@ -9,6 +9,7 @@ import Difficulty from "./Components/Difficulty";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
 import Highlight from "./Components/Highlight";
+import GameOver from "./Components/Modals/GameOver";
 
 function App() {
 
@@ -53,8 +54,7 @@ function App() {
     const savedGame = JSON.parse(localStorage.getItem("game"));
     if (
       !savedGame ||
-      !savedGame.board.length ||
-      !savedGame.isRunning
+      !savedGame.board.length
     ) {
       const newGame = generateNewGame();
       localStorage.setItem("game", JSON.stringify(newGame));
@@ -96,7 +96,7 @@ const isDisabled = useCallback(query=>{
 //Numbers (array of disabled numbers)
 useEffect(()=>{
   if (game.isRunning){
-    const disabledNumbers = _.range(1, 9).filter(num=>isDisabled(num));
+    const disabledNumbers = _.range(1, 10).filter(num=>isDisabled(num));
     if (disabledNumbers.length){
       setGame(game=>({
         ...game,
@@ -177,6 +177,7 @@ useEffect(() => {
           </div>
         </div>
         {/* <Timer /> */}
+        {game.isOver && <GameOver />}
       </div>
     </>
   )

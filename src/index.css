@@ -49,3 +49,40 @@
     font-family: "Winter Vista";
     src: url('/fonts/winter-vista/Winter\ Vista.otf');
 }
+
+@font-face {
+    font-family: 'Punk-TypeWriter';
+    src: url('/fonts/punk_typewriter/Punk\ Typewriter.otf')
+}
+@font-face {
+    font-family: 'Kg-Happy';
+    src: url('/fonts/kg_happy/KGHAPPY.ttf')
+}
+@font-face {
+    font-family: 'Komigo';
+    src: url('/fonts/komigo/Komigo3D-Regular.ttf')
+}
+@font-face {
+    font-family: 'Santa-Beast';
+    src: url('/fonts/santa_beast/Santa\ Beast.otf')
+}
+@font-face {
+    font-family: 'Coffee-Spark';
+    src: url('/fonts/coffee_spark/Coffee\ Spark.ttf')
+}
+@font-face {
+    font-family: 'Copy-Duck';
+    src: url('/fonts/copyduck/Copyduck.ttf')
+}
+@font-face {
+    font-family: 'Smartie-Caps';
+    src: url('/fonts/smartie-caps/SMARC___.TTF')
+}
+@font-face {
+    font-family: 'Workforce-Combine';
+    src: url('/fonts/workforce_combine/WorkforceCombine_PERSONAL_USE_ONLY.otf')
+}
+@font-face {
+    font-family: 'Mickey-Mouse';
+    src: url('/fonts/mickey_mouse/MickeyMouse_PERSONAL_USE_ONLY.otf')
+}
