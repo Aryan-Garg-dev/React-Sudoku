@@ -1,14 +1,10 @@
 import { useCallback, useEffect } from "react";
-import Appbar from "./Components/Appbar"
-import Board from "./Components/Board"
-// import Timer from "./Components/Timer"
-import Numbers from "./Components/Numbers"
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "./atoms";
-import Difficulty from "./Components/Difficulty";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
-import Highlight from "./Components/Highlight";
+import Game from "./Components/Game";
+import GameOver from "./Components/Modals/GameOver";
 // import GameOver from "./Components/Modals/GameOver";
 
 function App() {
@@ -199,21 +195,8 @@ function App() {
 
   return (
     <>
-      <div className="h-screen w-full">
-        <Appbar />
-        <div className="grid grid-cols-2">
-          <div>
-            <Board />
-            <Numbers />
-          </div>
-          <div className="flex flex-col gap-3">
-            <Difficulty />
-            <Highlight />
-          </div>
-        </div>
-        {/* <Timer /> */}
-        {/* {game.isOver && <GameOver />} */}
-      </div>
+      <Game />
+      {/* <GameOver /> */}
     </>
   )
 }
