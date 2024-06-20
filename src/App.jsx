@@ -9,7 +9,7 @@ import Difficulty from "./Components/Difficulty";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
 import Highlight from "./Components/Highlight";
-import GameOver from "./Components/Modals/GameOver";
+// import GameOver from "./Components/Modals/GameOver";
 
 function App() {
 
@@ -35,6 +35,7 @@ function App() {
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
+        validSquaresForNumber: [],
 
         selectedSquare: { r: null, c: null },
         selectedNumbersForSquare: [],
@@ -80,87 +81,121 @@ function App() {
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
-    if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty ) {
+    if (game.selectedDifficulty != game.data.difficulty ) {
       generateNewGame(game.selectedDifficulty);
     }
   }, [game.selectedDifficulty, generateNewGame, game.data.difficulty]);
 
 
 //Numbers (function to check which number is completed on board)
-const isDisabled = useCallback(query=>{
-  const solution = _.flatten(game.solution);
-  const board = _.flatten(game.board);
-  return !solution.filter((num, index)=>num!=board[index]).includes(query)
-}, [game.board, game.solution])
+  const isDisabled = useCallback(query=>{
+    const solution = _.flatten(game.solution);
+    const board = _.flatten(game.board);
+    return !solution.filter((num, index)=>num!=board[index]).includes(query)
+  }, [game.board, game.solution])
   
 //Numbers (array of disabled numbers)
-useEffect(()=>{
-  if (game.isRunning){
-    const disabledNumbers = _.range(1, 10).filter(num=>isDisabled(num));
-    if (disabledNumbers.length){
-      setGame(game=>({
-        ...game,
-        disabledNumbers,
-      }))
+  useEffect(()=>{
+    if (game.isRunning){
+      const disabledNumbers = _.range(1, 10).filter(num=>isDisabled(num));
+      if (disabledNumbers.length){
+        setGame(game=>({
+          ...game,
+          disabledNumbers,
+        }))
+      }
     }
-  }
-}, [isDisabled, setGame, game.board, game.isRunning])
+  }, [isDisabled, setGame, game.board, game.isRunning])
 
 //Numbers (reseet selected squares and selected number if it is disabled)
-useEffect(()=>{
-    if (game.isRunning && isDisabled(game.selectedNumber)){
-        setGame(game=>({
-            ...game,
-            selectedNumber: null,
-            selectedSquaresForNumber: [],
-        }))
-    }
-}, [isDisabled, setGame, game.selectedNumber, game.isRunning]);
+  useEffect(()=>{
+      if (game.isRunning && isDisabled(game.selectedNumber)){
+          setGame(game=>({
+              ...game,
+              selectedNumber: null,
+              selectedSquaresForNumber: [],
+          }))
+      }
+  }, [isDisabled, setGame, game.selectedNumber, game.isRunning]);
 
 //Numbers (move hints for selected square)
-useEffect(()=>{
-  if (game.isRunning){
-    const r = game.selectedSquare.r;
-    const c = game.selectedSquare.c;
-    if (r != null && c != null){
-      const validNumbers = _.range(1, 10);
-      for (let i = 0; i < 3; i++){
-        for (let j = 0; j < 3; j++){
-          const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
-          if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
-            const index = validNumbers.indexOf(game.board[x+i][y+j]);
+  useEffect(()=>{
+    if (game.isRunning){
+      const r = game.selectedSquare.r;
+      const c = game.selectedSquare.c;
+      if (r != null && c != null){
+        const validNumbers = _.range(1, 10);
+        for (let i = 0; i < 3; i++){
+          for (let j = 0; j < 3; j++){
+            const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
+            if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
+              const index = validNumbers.indexOf(game.board[x+i][y+j]);
+              validNumbers.splice(index, 1)
+            }
+          }
+        }
+          
+        for (let i = 0; i < 9; i++){
+          if (validNumbers.includes(game.board[i][c])){
+            const index =validNumbers.indexOf(game.board[i][c])
             validNumbers.splice(index, 1)
           }
         }
-      }
-        
-      for (let i = 0; i < 9; i++){
-        if (validNumbers.includes(game.board[i][c])){
-          const index =validNumbers.indexOf(game.board[i][c])
-          validNumbers.splice(index, 1)
-        }
-      }
-          
-      for (let j = 0; j < 9; j++){
-        if (validNumbers.includes(game.board[r][j])){
-          const index =validNumbers.indexOf(game.board[r][j])
-          validNumbers.splice(index, 1)
-        }
-      }
             
+        for (let j = 0; j < 9; j++){
+          if (validNumbers.includes(game.board[r][j])){
+            const index =validNumbers.indexOf(game.board[r][j])
+            validNumbers.splice(index, 1)
+          }
+        }
+              
+        setGame(game=>({
+          ...game,
+          validNumbersForSquare: validNumbers,
+        }))
+      }
+    }
+  }, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning])
+
+  //Board (valid squares for selected number)
+  useEffect(()=>{
+    if (game.isRunning && game.selectedNumber != null){
+      let validSquaresForNumber = [];
+      for (let r = 0; r < 3; r++){
+        for (let c = 0; c < 3; c++){
+          let validSquares = [];
+          let validCols = [];
+          let validRows = []
+          let isBoxValid = true;
+          for (let i = r*3; i < r*3+3; i++){
+            for (let j = c*3; j < c*3+3; j++){
+              validCols.push(j);
+              validRows.push(i);
+              validSquares.push({r: i, c: j});
+              if (game.board[i][j] == game.selectedNumber){
+                isBoxValid = false;
+              }
+            }
+          }
+          if (isBoxValid && validSquares){
+            validCols = validCols.filter(c=>_.range(0, 9).every(r=>game.board[r][c]!=game.selectedNumber));
+            validRows = validRows.filter(r=>_.range(0, 9).every(c=>game.board[r][c]!=game.selectedNumber));
+            validSquaresForNumber = validSquaresForNumber.concat(validSquares.filter(sqaure=>validCols.includes(sqaure.c)&&validRows.includes(sqaure.r)&&!game.board[sqaure.r][sqaure.c]));
+          }
+        }
+      }
       setGame(game=>({
         ...game,
-        validNumbersForSquare: validNumbers,
+        validSquaresForNumber,
       }))
     }
-  }
-}, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning])
+  }, [game.isRunning, game.selectedNumber, game.board, setGame])
 
-// (storing game state after every state changes)
-useEffect(() => {
-  if (game.board.length && (game.isRunning || game.isOver))
-  localStorage.setItem('game', JSON.stringify(game));
-}, [game]);
+  // (storing game state after every state changes)
+  useEffect(() => {
+    if (game.board.length && (game.isRunning || game.isOver))
+    localStorage.setItem('game', JSON.stringify(game));
+  }, [game]);
 
   return (
     <>
@@ -177,7 +212,7 @@ useEffect(() => {
           </div>
         </div>
         {/* <Timer /> */}
-        {game.isOver && <GameOver />}
+        {/* {game.isOver && <GameOver />} */}
       </div>
     </>
   )

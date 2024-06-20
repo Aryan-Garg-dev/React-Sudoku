@@ -58,7 +58,8 @@ const Numbers = () => {
                             setGame({
                                 ...game,
                                 selectedNumber: null,
-                                selectedSquaresForNumber: []
+                                selectedSquaresForNumber: [],
+                                validSquaresForNumber: [],
                             })
                         }
                     }

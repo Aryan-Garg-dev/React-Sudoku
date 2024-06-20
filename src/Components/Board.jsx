@@ -21,13 +21,19 @@ const Board = () => {
                                 className={`border border-gray-400 flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9  cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium
                                     ${ game.board.length && game.board[r][c]   
                                         ? game.selectedNumber === game.board[r][c] && game.highlightSquares
-                                            ? 'border-4 border-slate-500 bg-[#344C64] text-[#E2DFD0]'
-                                            :'bg-slate-200 hover:bg-slate-200 text-gray-800' 
+                                            ? 'border-4 border-[#55AD9B] bg-[#95D2B3]'
+                                            : (game.selectedSquare.r != null && game.selectedSquare.c != null) && (game.selectedSquare.r == r || game.selectedSquare.c == c || _.range(Math.floor(game.selectedSquare.r/3)*3, Math.floor(game.selectedSquare.r/3)*3+3).includes(r) && _.range(Math.floor(game.selectedSquare.c/3)*3, Math.floor(game.selectedSquare.c/3)*3+3).includes(c)) && game.highlightSquares
+                                                ? 'bg-[#95D2B3]'
+                                                : 'bg-slate-200 hover:bg-slate-200 text-gray-800' 
                                         : (game.selectedSquare.r == r && game.selectedSquare.c == c) 
                                             ? 'bg-slate-100 border-[4px] border-[#344C64] text-gray-800 '
-                                            : game.selectedSquaresForNumber.find(square=>square.r == r && square.c == c)
-                                                ? 'bg-red-200 text-gray-800'
-                                                : 'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400'}
+                                            : (game.selectedSquare.r != null && game.selectedSquare.c != null) && (game.selectedSquare.r == r || game.selectedSquare.c == c || _.range(Math.floor(game.selectedSquare.r/3)*3, Math.floor(game.selectedSquare.r/3)*3+3).includes(r) && _.range(Math.floor(game.selectedSquare.c/3)*3, Math.floor(game.selectedSquare.c/3)*3+3).includes(c)) && game.highlightSquares
+                                                ? 'bg-[#D8EFD3]'
+                                                : game.selectedSquaresForNumber.length && game.selectedSquaresForNumber.find(square=>square.r == r && square.c == c)
+                                                    ? 'bg-red-200 text-gray-800'
+                                                    :  game.validSquaresForNumber.find(square=>square.r == r && square.c == c) && game.highlightMoves
+                                                        ? 'bg-[#FEFFD2] border-1 border-orange-300'
+                                                        :'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400'}
                                         `} 
                                         
                                         key={r*9+c} 
