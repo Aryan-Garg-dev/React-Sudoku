@@ -3,6 +3,7 @@ import Board from "./Board"
 import Difficulty from "./Difficulty"
 import Highlight from "./Highlight"
 import Numbers from "./Numbers"
+import Timer from './Timer'
 
 const Game = () => {
   return (
@@ -14,7 +15,8 @@ const Game = () => {
             <Board />
             <Numbers />
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4 pt-2">
+            <Timer />
             <Difficulty />
             <Highlight />
           </div>

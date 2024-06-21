@@ -4,8 +4,7 @@ import { gameStateAtom } from "./atoms";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-import GameOver from "./Components/Modals/GameOver";
-import Timer from "./Components/Timer";
+// import GameOver from "./Components/Modals/GameOver";
 // import GameOver from "./Components/Modals/GameOver";
 
 function App() {
@@ -25,8 +24,9 @@ function App() {
 
         isRunning: true,
         isOver: false,
-        errorCount: 0,
         rating: 0,
+        errorCount: 0,
+        timeSpentInSec: 0,
 
         highlightMoves: false,
 
@@ -52,12 +52,20 @@ function App() {
     const savedGame = JSON.parse(localStorage.getItem("game"));
     if (
       !savedGame ||
-      !savedGame.board.length
+      !savedGame.board.length ||
+      savedGame.isOver
     ) {
       const newGame = generateNewGame();
       localStorage.setItem("game", JSON.stringify(newGame));
+      console.log(1.1)
+      console.log(newGame);
     } else {
-      setGame(savedGame);
+      setGame({
+        ...savedGame,
+        isRunning: true,
+      });
+      console.log(1.2)
+      console.log(savedGame);
     }
   }, [setGame]);
 
@@ -73,13 +81,15 @@ function App() {
         isOver: true,
         isRunning: false,
       }));
+      console.log(2)
     }
   }, [game.board, game.solution, setGame]);
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
-    if (game.selectedDifficulty != game.data.difficulty ) {
+    if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
       generateNewGame(game.selectedDifficulty);
+      console.log(3)
     }
   }, [game.selectedDifficulty, generateNewGame, game.data.difficulty]);
 
@@ -93,7 +103,7 @@ function App() {
   
 //Numbers (array of disabled numbers)
   useEffect(()=>{
-    if (game.isRunning){
+    if (game.isRunning && game.board.length){
       const disabledNumbers = _.range(1, 10).filter(num=>isDisabled(num));
       if (disabledNumbers.length){
         setGame(game=>({
@@ -101,23 +111,25 @@ function App() {
           disabledNumbers,
         }))
       }
+      console.log(4)
     }
   }, [isDisabled, setGame, game.board, game.isRunning])
 
 //Numbers (reseet selected squares and selected number if it is disabled)
   useEffect(()=>{
-      if (game.isRunning && isDisabled(game.selectedNumber)){
+      if (game.isRunning && isDisabled(game.selectedNumber) && game.board.length){
           setGame(game=>({
               ...game,
               selectedNumber: null,
               selectedSquaresForNumber: [],
           }))
+          console.log(5)
       }
   }, [isDisabled, setGame, game.selectedNumber, game.isRunning]);
 
 //Numbers (move hints for selected square)
   useEffect(()=>{
-    if (game.isRunning){
+    if (game.isRunning && game.board.length){
       const r = game.selectedSquare.r;
       const c = game.selectedSquare.c;
       if (r != null && c != null){
@@ -151,12 +163,13 @@ function App() {
           validNumbersForSquare: validNumbers,
         }))
       }
+      console.log(6)
     }
   }, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning])
 
   //Board (valid squares for selected number)
   useEffect(()=>{
-    if (game.isRunning && game.selectedNumber != null){
+    if (game.isRunning && game.selectedNumber != null && game.board.length){
       let validSquaresForNumber = [];
       for (let r = 0; r < 3; r++){
         for (let c = 0; c < 3; c++){
@@ -185,20 +198,37 @@ function App() {
         ...game,
         validSquaresForNumber,
       }))
+      console.log(7)
     }
   }, [game.isRunning, game.selectedNumber, game.board, setGame])
+  
+  //Timer
+  useEffect(() => {
+    let interval = null;
+    if (game.isRunning && !game.isOver) {
+      interval = setInterval(() => {
+        setGame(game=>({
+          ...game,
+          timeSpentInSec: game.timeSpentInSec + 1,
+        }))
+        console.log(8)
+      }, 1000);
+    } else if (!game.isRunning && game.isOver && game.timeSpentInSec !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [game.isRunning, game.timeSpentInSec, setGame, game.isOver]);
 
   // (storing game state after every state changes)
   useEffect(() => {
-    if (game.board.length && (game.isRunning || game.isOver))
+    if (game.board.length)
     localStorage.setItem('game', JSON.stringify(game));
   }, [game]);
 
   return (
     <>
       <Game />
-      {/* <Timer /> */}
-      {/* <GameOver /> */}
+      {/* {game.isOver && <GameOver /> } */}
     </>
   )
 }

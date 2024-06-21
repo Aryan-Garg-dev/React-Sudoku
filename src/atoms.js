@@ -23,6 +23,8 @@ export const gameStateAtom = atom({
         isOver: false,  // (true || false)
         rating: 0,
         errorCount: 0, // (errors)
+        timeSpentInSec: 0,
+
         highlightSquares: true,
         highlightMoves: false,
 
