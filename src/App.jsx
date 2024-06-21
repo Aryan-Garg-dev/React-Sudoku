@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "./atoms";
@@ -122,6 +121,27 @@ function App() {
       console.log(4)
     }
   }, [isDisabled, setGame, game.board, game.isRunning])
+
+  //Automatically fill the last number
+  useEffect(()=>{
+    if (game.disabledNumbers.length == 8){
+      const numToFill = _.range(1, 10).find(num=>!game.disabledNumbers.includes(num));
+      const newBoard = [];
+      for (let r = 0; r < 9; r++){
+        const row = [];
+        for (let c = 0; c < 9; c++){
+          if (game.board[r][c]==null) row.push(numToFill);
+          else row.push(game.board[r][c]);
+        }
+        newBoard.push(row);
+      }
+      setGame(game=>({
+        ...game,
+        board: newBoard,
+        disabledNumbers: [...game.disabledNumbers, numToFill]
+      }))
+    }
+  }, [game.disabledNumbers, setGame])
 
 //Numbers (reseet selected squares and selected number if it is disabled)
   useEffect(()=>{

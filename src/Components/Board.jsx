@@ -19,7 +19,7 @@ const Board = () => {
                         >
                             <div 
                                 className={`border border-gray-400 flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9  cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium
-                                    ${game.isRunning 
+                                    ${game.isRunning || game.isOver
                                         ? (
                                             game.board.length && game.board[r][c]   
                                             ? game.selectedNumber === game.board[r][c] && game.highlightSquares
@@ -77,7 +77,7 @@ const Board = () => {
                                             }
                                         }}
                                         >
-                                {game.isRunning && game.board.length && game.board[r][c] ? game.board[r][c] : ""}
+                                {(game.isRunning || game.isOver) && game.board.length && game.board[r][c] ? game.board[r][c] : ""}
                             </div>
                         </div>
                     ))}

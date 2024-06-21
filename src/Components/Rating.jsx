@@ -3,6 +3,11 @@ import _ from 'lodash'
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
 // import Label from './Label';
 
+
+/**
+ * Logic to remove star when highlightmoves is called
+ */
+
 const size = 30;
 
 const Rating = ({rating}) => {
