@@ -4,8 +4,7 @@ import { gameStateAtom } from "./atoms";
 import { createNewGame } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-// import GameOver from "./Components/Modals/GameOver";
-// import GameOver from "./Components/Modals/GameOver";
+import GameOver from "./Components/Modals/GameOver";
 
 function App() {
 

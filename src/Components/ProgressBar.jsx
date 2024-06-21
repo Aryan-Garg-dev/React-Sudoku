@@ -1,27 +1,23 @@
 // import React from 'react'
-
-/**
- * Time should be passed throught state 
- * width should not go over 100
- */
+import { useRecoilValue } from "recoil";
+import { timeLimit } from "../constants";
+import { gameStateAtom } from "../atoms";
 
 const ProgressBar = () => {
+  const game = useRecoilValue(gameStateAtom);
 
-
-  const calculateWidth = ({timeLimit}) => {
-    const percentage = (time / timeLimit) * 100;
-    return `${Math.floor(percentage)}%`;
+  const calculateWidth = () => {
+    const percentage = (game.timeSpentInSec / timeLimit[game.data.difficulty]) * 100;
+    return `${percentage < 100 ? Math.floor(percentage) : 100}%`;
   };
 
   return (
-    <div className='w-24 mt-4'>
-        <div className='h-3 w-full bg-gray-100 rounded-full'>
-        <div
-            className='h-3 bg-slate-800 rounded-full'
-            style={{ width : calculateWidth() }} 
-          >          
-          </div>
-    </div>
+    <div className='h-3 w-full bg-[#F5E7B2] rounded-full flex items-center'>
+      <div
+        className='h-3 bg-[#9B3922] rounded-full'
+        style={{ width : calculateWidth() }} 
+        >          
+      </div>
     </div>
   )
 }

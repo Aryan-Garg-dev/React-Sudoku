@@ -1,6 +1,6 @@
 export const timeLimit = {
-    'easy': 60,
-    'medium': 120,
-    'hard': 180,
-    'difficult': 240,
+    'easy': 120,
+    'medium': 240,
+    'hard': 360,
+    'expert': 480,
 }

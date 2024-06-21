@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
 import _ from 'lodash'
 import { formatTime } from '../functions';
+import ProgressBar from './ProgressBar';
 
 /**
  * @todo 
@@ -48,13 +49,13 @@ const Timer = () => {
   return (
     <div className='w-fit'>
       <label className='font-playwrite text-xs font-semibold text-[#6C3428]'>Timer</label>
-      <div className='flex gap-2 text-center w-fit'>
+      <div className='flex gap-2 text-center w-fit mb-2'>
         <div className="text-xl font-kghappy font-thin py-1 w-auto text-[#9B3922] flex justify-center items-center min-w-28 cursor-default">{formatTime(game.timeSpentInSec)}</div>
           <div className="flex justify-center items-center gap-2 py-1">
             <div className='relative'>
               { !game.isRunning 
                 ? <button
-                    className="peer w-fit h-fit p-2 text-white bg-green-500 rounded hover:bg-green-600"
+                    className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-green-600 hover:text-white outline-none"
                     onClick={() => setGame({
                       ...game,
                       isRunning: true,
@@ -63,7 +64,7 @@ const Timer = () => {
                     <FaPlay size={12} />
                   </button>
                 : <button
-                  className="peer w-fit h-fit p-2 text-white bg-red-500 rounded hover:bg-red-600"
+                  className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-red-600 hover:text-white outline-none"
                   onClick={() => setGame({
                     ...game,
                     isRunning: false,
@@ -72,18 +73,23 @@ const Timer = () => {
                     <FaPause size={12} />
                   </button>
               }
-              <label className='hidden absolute peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>{game.isRunning ? 'Pause' : 'Play'}</label>
+              <label className='hidden absolute peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>{game.isRunning ? 'Pause' : 'Resume'}</label>
             </div>
             <div className='relative'>
-              <button
-              className="peer w-fit h-fit p-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-              onClick={resetGame}
-              >
-                <VscDebugRestart size={12} />
-              </button>
+              <div className='peer flex justify-center items-center'>
+                <button
+                className="w-fit h-fit p-[5px] text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-blue-600 hover:text-white outline-none"
+                onClick={resetGame}
+                >
+                  <VscDebugRestart size={18} />
+                </button>
+              </div>
               <label className='hidden absolute peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>Reset</label>
             </div>
           </div>
+      </div>
+      <div className='pl-1'>
+        <ProgressBar />
       </div>
     </div>
   );
