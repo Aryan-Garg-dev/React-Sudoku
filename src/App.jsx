@@ -71,12 +71,8 @@ function App() {
 
   //Game Over
   useEffect(() => {
-    if (
-        game.board.length 
-        && game.solution.length 
-        && (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("")
-        || game.errorCount >= errorLimits[game.data.difficulty])
-      ) {
+    if ( game.board.length && game.solution.length )
+    if (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("") || game.errorCount >= errorLimits[game.data.difficulty]){
       const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty])
       setGame(game=>({
         ...game,
@@ -89,8 +85,34 @@ function App() {
         },
       }));
       console.log(2)
+
+    // Auto fill the last number
+    } else if (game.disabledNumbers.length == 8){
+      const numToFill = _.range(1, 10).find(num=>!game.disabledNumbers.includes(num));
+      const newBoard = [];
+      for (let r = 0; r < 9; r++){
+        const row = [];
+        for (let c = 0; c < 9; c++){
+          if (game.board[r][c]==null) row.push(numToFill);
+          else row.push(game.board[r][c]);
+        }
+        newBoard.push(row);
+      }
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]);
+      setGame(game=>({
+        ...game,
+        board: newBoard,
+        disabledNumbers: [...game.disabledNumbers, numToFill],
+        isOver: true,
+        isRunning: false,
+        rating: gameRating,
+        player: { ...game.player, 
+          totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
+          rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
+        },
+      }))
     }
-  }, [game.board, game.solution, setGame, game.errorCount]);
+  }, [game.board, game.solution, setGame, game.errorCount, game.disabledNumbers]);
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
@@ -121,27 +143,6 @@ function App() {
       console.log(4)
     }
   }, [isDisabled, setGame, game.board, game.isRunning])
-
-  //Automatically fill the last number
-  // useEffect(()=>{
-  //   if (game.disabledNumbers.length == 8){
-  //     const numToFill = _.range(1, 10).find(num=>!game.disabledNumbers.includes(num));
-  //     const newBoard = [];
-  //     for (let r = 0; r < 9; r++){
-  //       const row = [];
-  //       for (let c = 0; c < 9; c++){
-  //         if (game.board[r][c]==null) row.push(numToFill);
-  //         else row.push(game.board[r][c]);
-  //       }
-  //       newBoard.push(row);
-  //     }
-  //     setGame(game=>({
-  //       ...game,
-  //       board: newBoard,
-  //       disabledNumbers: [...game.disabledNumbers, numToFill]
-  //     }))
-  //   }
-  // }, [game.disabledNumbers, setGame])
 
 //Numbers (reseet selected squares and selected number if it is disabled)
   useEffect(()=>{
