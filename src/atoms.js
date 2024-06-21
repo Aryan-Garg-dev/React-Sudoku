@@ -21,7 +21,7 @@ export const gameStateAtom = atom({
         selectedDifficulty: "", // (random: "" || easy || medium || hard || expert)
         isRunning: false, // (true || false)
         isOver: false,  // (true || false)
-        rating: 0,
+        rating: 5,
         errorCount: 0, // (errors)
         timeSpentInSec: 0,
 
@@ -40,6 +40,7 @@ export const gameStateAtom = atom({
 
         player: {
             rating: 0, //player rating
+            totalGamesPlayed: 0,
         }
     }
 })

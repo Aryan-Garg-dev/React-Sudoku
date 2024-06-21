@@ -14,7 +14,7 @@ const ProgressBar = () => {
   return (
     <div className='h-3 w-full bg-[#F5E7B2] rounded-full flex items-center'>
       <div
-        className='h-3 bg-[#9B3922] rounded-full'
+        className='h-3 rounded-full bg-gradient-to-r from-[#C08B5C] from-30% via-[#795458] via-60% to-[#453F78] to-90% '
         style={{ width : calculateWidth() }} 
         >          
       </div>

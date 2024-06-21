@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "./atoms";
-import { createNewGame } from "./functions";
+import { calculateGameRating, calculatePlayerRating, createNewGame } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-import GameOver from "./Components/Modals/GameOver";
+// import GameOver from "./Components/Modals/GameOver";
+import { errorLimits, timeLimit } from "./constants";
 
 function App() {
 
@@ -23,7 +25,7 @@ function App() {
 
         isRunning: true,
         isOver: false,
-        rating: 0,
+        rating: 5,
         errorCount: 0,
         timeSpentInSec: 0,
 
@@ -73,16 +75,23 @@ function App() {
     if (
         game.board.length 
         && game.solution.length 
-        && _.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("")
+        && (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("")
+        || game.errorCount >= errorLimits[game.data.difficulty])
       ) {
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty])
       setGame(game=>({
         ...game,
         isOver: true,
         isRunning: false,
+        rating: gameRating,
+        player: { ...game.player, 
+          totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
+          rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
+        },
       }));
       console.log(2)
     }
-  }, [game.board, game.solution, setGame]);
+  }, [game.board, game.solution, setGame, game.errorCount]);
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
@@ -209,6 +218,7 @@ function App() {
         setGame(game=>({
           ...game,
           timeSpentInSec: game.timeSpentInSec + 1,
+          rating: calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]),
         }))
         console.log(8)
       }, 1000);

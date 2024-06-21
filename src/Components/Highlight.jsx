@@ -1,12 +1,13 @@
 import { Toggle } from './Toggle'
 import { gameStateAtom } from '../atoms'
 import { useRecoilState } from 'recoil'
+import Label from './Label';
 
 const Highlight = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
   return (
     <div className="w-fit">
-        <label className="font-playwrite text-xs font-semibold text-[#6C3428]">Highlight</label>
+        <Label text={'Highlight'} />
         <div className="flex gap-3 mt-1">
             <Toggle text={'Sqaures'} checked={game.highlightSquares} onClick={()=>setGame(game=>({
                 ...game,

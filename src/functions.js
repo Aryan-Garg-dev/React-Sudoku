@@ -15,6 +15,22 @@ export const formatTime = (time) => {
     return `${getHours}:${getMinutes}:${getSeconds}`;
 };
 
+const roundOffRating = (rating)=>{
+    const wholeNumber = Math.trunc(rating);
+    const decimalNumber = (rating - wholeNumber > 0 && rating - wholeNumber > 0.5) ? 1 : 0;
+    return wholeNumber + decimalNumber ;
+}
 
-//Game Rating Logic
-//Player Rating Logic
+export const calculateGameRating = (timeTaken, timeLimit, errorCount, errorLimit)=>{
+    const timeLeft = timeLimit - timeTaken;
+    if (timeLeft <= 0) return 0;
+    if (errorCount >= errorLimit) return 0;
+    const rating = ((timeLeft / timeLimit) + ((errorLimit - errorCount) / errorLimit)) * 2.5;
+    return roundOffRating(rating); 
+}
+
+export const calculatePlayerRating = (currentRating, totalGamesPlayed, thisGameRating)=>{
+    const rating = (currentRating * (totalGamesPlayed - 1) + thisGameRating) / totalGamesPlayed;
+    if (totalGamesPlayed == 0) return 0;
+    return roundOffRating(rating);
+}

@@ -7,6 +7,7 @@ import { gameStateAtom } from '../atoms';
 import _ from 'lodash'
 import { formatTime } from '../functions';
 import ProgressBar from './ProgressBar';
+import Label from './Label';
 
 /**
  * @todo 
@@ -28,7 +29,7 @@ const Timer = () => {
       board: _.chunk(Array.from(game.data.puzzle).map(num => Number(num)), 9),
 
       isRunning: true,
-      rating: 0,
+      rating: 5,
       errorCount: 0,
       timeSpentInSec: 0,
 
@@ -48,9 +49,9 @@ const Timer = () => {
 
   return (
     <div className='w-fit'>
-      <label className='font-playwrite text-xs font-semibold text-[#6C3428]'>Timer</label>
+      <Label text={'Timer'} />
       <div className='flex gap-2 text-center w-fit mb-2'>
-        <div className="text-xl font-kghappy font-thin py-1 w-auto text-[#9B3922] flex justify-center items-center min-w-28 cursor-default">{formatTime(game.timeSpentInSec)}</div>
+        <div className="text-xl font-kghappy font-thin py-1 w-auto text-[#9B3922] flex justify-center items-center min-w-28 cursor-default select-none">{formatTime(game.timeSpentInSec)}</div>
           <div className="flex justify-center items-center gap-2 py-1">
             <div className='relative'>
               { !game.isRunning 
