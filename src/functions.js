@@ -17,15 +17,18 @@ export const formatTime = (time) => {
 
 const roundOffRating = (rating)=>{
     const wholeNumber = Math.trunc(rating);
-    const decimalNumber = (rating - wholeNumber > 0 && rating - wholeNumber > 0.5) ? 1 : 0;
+    const decimalNumber = (rating - wholeNumber > 0) 
+        ? (rating - wholeNumber > 0.5) 
+            ? 1 
+            : 0.5
+        : 0;
     return wholeNumber + decimalNumber ;
 }
 
 export const calculateGameRating = (timeTaken, timeLimit, errorCount, errorLimit)=>{
     const timeLeft = timeLimit - timeTaken;
-    if (timeLeft <= 0) return 0;
     if (errorCount >= errorLimit) return 0;
-    const rating = ((timeLeft / timeLimit) + ((errorLimit - errorCount) / errorLimit)) * 2.5;
+    const rating = (timeLeft / timeLimit) * 2 + ((errorLimit - errorCount) / errorLimit) * 2 + 1;
     return roundOffRating(rating); 
 }
 

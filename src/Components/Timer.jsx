@@ -57,10 +57,13 @@ const Timer = () => {
               { !game.isRunning 
                 ? <button
                     className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-green-600 hover:text-white outline-none"
-                    onClick={() => setGame({
+                    onClick={() => { 
+                      if (!game.isOver)
+                      setGame({
                       ...game,
                       isRunning: true,
-                    })}
+                    })
+                    }}
                     >
                     <FaPlay size={12} />
                   </button>
