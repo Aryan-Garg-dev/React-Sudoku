@@ -34,6 +34,7 @@ const Timer = () => {
       timeSpentInSec: 0,
 
       highlightMoves: false,
+      calledHiglightMoves: false,
 
       selectedNumber: null,
       selectedSquaresForNumber: [], 

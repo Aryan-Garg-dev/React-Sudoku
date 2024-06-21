@@ -13,10 +13,20 @@ const Highlight = () => {
                 ...game,
                 highlightSquares: !game.highlightSquares,
             }))} />
-            <Toggle text={'Moves'} checked={game.highlightMoves} onClick={()=>setGame(game=>({
-                ...game,
-                highlightMoves: !game.highlightMoves,
-            }))} />
+            <Toggle text={'Moves'} checked={game.highlightMoves} onClick={()=>setGame(game=>{
+                if (game.calledHiglightMoves){
+                    return {
+                        ...game,
+                        highlightMoves: !game.highlightMoves, 
+                    }
+                } else {
+                    return {
+                        ...game,
+                        highlightMoves: !game.highlightMoves,
+                        calledHiglightMoves: true,
+                    }
+                }
+            })} />
         </div>
     </div>
   )

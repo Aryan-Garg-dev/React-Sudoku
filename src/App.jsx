@@ -29,6 +29,7 @@ function App() {
         timeSpentInSec: 0,
 
         highlightMoves: false,
+        calledHighlightMoves: false,
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
@@ -67,18 +68,18 @@ function App() {
       console.log(1.2)
       console.log(savedGame);
     }
-  }, [setGame]);
+  }, [setGame, generateNewGame]);
 
   //Game Over
   useEffect(() => {
     if ( game.board.length && game.solution.length )
     if (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("") || game.errorCount >= errorLimits[game.data.difficulty]){
-      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty])
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
       setGame(game=>({
         ...game,
         isOver: true,
         isRunning: false,
-        rating: gameRating,
+        rating: gameRating > 0 ? gameRating : 0,
         player: { ...game.player, 
           totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
           rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
@@ -98,14 +99,14 @@ function App() {
         }
         newBoard.push(row);
       }
-      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]);
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
       setGame(game=>({
         ...game,
         board: newBoard,
         disabledNumbers: [...game.disabledNumbers, numToFill],
         isOver: true,
         isRunning: false,
-        rating: gameRating,
+        rating: gameRating > 0 ? gameRating : 0,
         player: { ...game.player, 
           totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
           rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
@@ -120,7 +121,7 @@ function App() {
       generateNewGame(game.selectedDifficulty);
       console.log(3)
     }
-  }, [game.selectedDifficulty, generateNewGame, game.data.difficulty]);
+  }, [game.selectedDifficulty, generateNewGame, game.data.difficulty, game.board.length]);
 
 
 //Numbers (function to check which number is completed on board)
@@ -154,7 +155,7 @@ function App() {
           }))
           console.log(5)
       }
-  }, [isDisabled, setGame, game.selectedNumber, game.isRunning]);
+  }, [isDisabled, setGame, game.selectedNumber, game.isRunning, game.board.length]);
 
 //Numbers (move hints for selected square)
   useEffect(()=>{
@@ -236,11 +237,13 @@ function App() {
     let interval = null;
     if (game.isRunning && !game.isOver) {
       interval = setInterval(() => {
-        setGame(game=>({
+        setGame(game=>{
+          const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
+          return {
           ...game,
           timeSpentInSec: game.timeSpentInSec + 1,
-          rating: calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]),
-        }))
+          rating:  gameRating > 0 ? gameRating : 0,
+        }})
         console.log(8)
       }, 1000);
     } else if (!game.isRunning && game.isOver && game.timeSpentInSec !== 0) {

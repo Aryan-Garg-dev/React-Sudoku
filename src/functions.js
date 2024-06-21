@@ -28,7 +28,7 @@ const roundOffRating = (rating)=>{
 export const calculateGameRating = (timeTaken, timeLimit, errorCount, errorLimit)=>{
     const timeLeft = timeLimit - timeTaken;
     if (errorCount >= errorLimit) return 0;
-    const rating = (timeLeft / timeLimit) * 2 + ((errorLimit - errorCount) / errorLimit) * 2 + 1;
+    const rating = ((timeLeft > 0 ? timeLeft : 0) / timeLimit) * 2 + ((errorLimit - errorCount) / errorLimit) * 2 + 1;
     return roundOffRating(rating); 
 }
 
