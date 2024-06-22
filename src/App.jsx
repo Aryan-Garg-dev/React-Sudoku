@@ -257,7 +257,7 @@ function App() {
   return (
     <>
       <Game />
-      <GameOver /> 
+      {/* <GameOver />  */}
     </>
   )
 }
