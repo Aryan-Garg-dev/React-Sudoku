@@ -11,7 +11,7 @@ export default {
         arcade: [ "Arcade Classic", 'system-ui' ],
         pacfont: [ "Pacfont", 'system-ui' ],
         crackman: [ "Crackman", "system-ui" ],
-        zerovel: [ "Zero Velocity Brk", 'system-ui' ],
+        zerovel: [ "Zero Velocity Brk", 'Playwrite FR Moderne', 'system-ui' ],
         dpcomic: [ 'Dp Comic', 'system-ui' ],
         roadrage: [ 'Road-Rage', 'system-ui' ],
         vista: [ 'Winter Vista', 'system-ui' ],

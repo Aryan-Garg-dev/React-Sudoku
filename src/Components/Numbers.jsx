@@ -31,9 +31,9 @@ const Numbers = () => {
             key={index}
             onClick={()=>{
                 if (game.isRunning)
+                //When Empty Square is selected, Number has to be selected
                 if (game.selectedSquare.r != null && game.selectedSquare.c != null && !game.disabledNumbers.includes(index+1)){
                     const { r, c } = game.selectedSquare;
-                    //Board Changes (Notes Check required)
                     if (index+1 == game.solution[r][c]){
                         const newBoard = _.cloneDeep(game.board);
                         newBoard[r][c] = index + 1;
@@ -53,12 +53,17 @@ const Numbers = () => {
                         })
                     }
                 } else {
+                    // When number is selected, another number is being selected or that number is being unselected
+                    // if its a valid number it will be selected,
+                    // else prev selected number will be unselected
                     if (!game.disabledNumbers.includes(index+1)){
                         if (game.selectedNumber != index + 1){
                             setGame({
                                 ...game,
                                 selectedNumber: index + 1,
                                 selectedSquaresForNumber: [],
+
+                                invalidSquareForNumber: { r: null, c: null },
                             })
                         } else {
                             setGame({
@@ -66,6 +71,8 @@ const Numbers = () => {
                                 selectedNumber: null,
                                 selectedSquaresForNumber: [],
                                 validSquaresForNumber: [],
+
+                                invalidSquareForNumber: { r: null, c: null },
                             })
                         }
                     }

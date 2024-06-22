@@ -4,7 +4,7 @@ import { gameStateAtom } from "./atoms";
 import { calculateGameRating, calculatePlayerRating, createNewGame } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-import GameOver from "./Components/Modals/GameOver";
+// import GameOver from "./Components/Modals/GameOver";
 import { errorLimits, timeLimit } from "./constants";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   // (Function to generate and set the new game state)
   const generateNewGame = useCallback(
     (difficulty) => {
-      const { data, board, solution, notes } = createNewGame(difficulty);
+      const { data, board, solution } = createNewGame(difficulty);
       const newGame = {
         ...game,
         data,
@@ -30,9 +30,6 @@ function App() {
 
         highlightMoves: false,
         calledHighlightMoves: false,
-
-        makeNotes: false,
-        notes,
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
@@ -66,7 +63,6 @@ function App() {
     } else {
       setGame({
         ...savedGame,
-        makeNotes: false,
         isRunning: true,
       });
       console.log(1.2)
@@ -92,7 +88,6 @@ function App() {
       console.log(2)
 
     // Auto fill the last number
-    //Board change (notes check required here)
     } else if (game.disabledNumbers.length == 8){
       const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
       setGame(game=>({
