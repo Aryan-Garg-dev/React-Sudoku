@@ -4,7 +4,7 @@ import { gameStateAtom } from "./atoms";
 import { calculateGameRating, calculatePlayerRating, createNewGame } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-// import GameOver from "./Components/Modals/GameOver";
+import GameOver from "./Components/Modals/GameOver";
 import { errorLimits, timeLimit } from "./constants";
 
 function App() {
@@ -78,7 +78,7 @@ function App() {
   useEffect(() => {
     if ( game.board.length && game.solution.length )
     if (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("") || game.errorCount >= errorLimits[game.data.difficulty]){
-      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
       setGame(game=>({
         ...game,
         isOver: true,
@@ -94,21 +94,11 @@ function App() {
     // Auto fill the last number
     //Board change (notes check required here)
     } else if (game.disabledNumbers.length == 8){
-      const numToFill = _.range(1, 10).find(num=>!game.disabledNumbers.includes(num));
-      const newBoard = [];
-      for (let r = 0; r < 9; r++){
-        const row = [];
-        for (let c = 0; c < 9; c++){
-          if (game.board[r][c]==null) row.push(numToFill);
-          else row.push(game.board[r][c]);
-        }
-        newBoard.push(row);
-      }
-      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
+      const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
       setGame(game=>({
         ...game,
-        board: newBoard,
-        disabledNumbers: [...game.disabledNumbers, numToFill],
+        board: game.solution,
+        disabledNumbers: _.range(1, 10),
         isOver: true,
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
@@ -117,6 +107,7 @@ function App() {
           rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
         },
       }))
+      console.log(2.2);
     }
   }, [game.board, game.solution, setGame, game.errorCount, game.disabledNumbers]);
 
@@ -243,7 +234,7 @@ function App() {
     if (game.isRunning && !game.isOver) {
       interval = setInterval(() => {
         setGame(game=>{
-          const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHiglightMoves ? 1 : 0);
+          const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
           return {
           ...game,
           timeSpentInSec: game.timeSpentInSec + 1,
@@ -266,7 +257,7 @@ function App() {
   return (
     <>
       <Game />
-      {/* <GameOver />  */}
+      <GameOver /> 
     </>
   )
 }

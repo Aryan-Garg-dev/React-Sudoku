@@ -34,7 +34,7 @@ const Timer = () => {
       timeSpentInSec: 0,
 
       highlightMoves: false,
-      calledHiglightMoves: false,
+      calledHighlightMoves: false,
 
       makeNotes: false,
       notes: _.chunk(Array.from(game.data.puzzle).map(num => Number(num)), 9),

@@ -23,7 +23,7 @@ const Highlight = () => {
                     return {
                         ...game,
                         highlightMoves: !game.highlightMoves,
-                        calledHiglightMoves: true,
+                        calledHighlightMoves: true,
                     }
                 }
             })} />
