@@ -8,7 +8,6 @@
 > Hello, I am **Aryan Garg**, CS undergrad, currently pursuing B.Tech in VIT, Vellore. I am fond of Web development. I have a basic understanding of MERN stack as well as PERN stack.
 
 ### Project Motivation
----
 > **MFC :** __Mozilla FireFox Club__  
 This project is part of **MFC** *Mini Games* project.
 
