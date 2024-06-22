@@ -6,7 +6,7 @@ const Numbers = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
     
   return (
-    <div className='flex w-fit gap-[4px] m-2'>
+    <div className='flex w-fit gap-[5px]'>
         {_.times(9, index=>(
             <div className={`shadow-sm
                 rounded-lg flex justify-center items-center text-xl
@@ -33,6 +33,7 @@ const Numbers = () => {
                 if (game.isRunning)
                 if (game.selectedSquare.r != null && game.selectedSquare.c != null && !game.disabledNumbers.includes(index+1)){
                     const { r, c } = game.selectedSquare;
+                    //Board Changes (Notes Check required)
                     if (index+1 == game.solution[r][c]){
                         const newBoard = _.cloneDeep(game.board);
                         newBoard[r][c] = index + 1;

@@ -41,7 +41,7 @@ export const gameStateAtom = atom({
         disabledNumbers: [], // (numbers that can't be filled anymore)
 
         player: {
-            rating: 0, //player rating
+            rating: 1, //player rating
             totalGamesPlayed: 0,
         }
     }

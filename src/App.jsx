@@ -14,7 +14,7 @@ function App() {
   // (Function to generate and set the new game state)
   const generateNewGame = useCallback(
     (difficulty) => {
-      const { data, board, solution } = createNewGame(difficulty);
+      const { data, board, solution, notes } = createNewGame(difficulty);
       const newGame = {
         ...game,
         data,
@@ -30,6 +30,9 @@ function App() {
 
         highlightMoves: false,
         calledHighlightMoves: false,
+
+        makeNotes: false,
+        notes,
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
@@ -63,6 +66,7 @@ function App() {
     } else {
       setGame({
         ...savedGame,
+        makeNotes: false,
         isRunning: true,
       });
       console.log(1.2)
@@ -88,6 +92,7 @@ function App() {
       console.log(2)
 
     // Auto fill the last number
+    //Board change (notes check required here)
     } else if (game.disabledNumbers.length == 8){
       const numToFill = _.range(1, 10).find(num=>!game.disabledNumbers.includes(num));
       const newBoard = [];
@@ -117,7 +122,7 @@ function App() {
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
-    if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
+    if (game.selectedDifficulty != game.data.difficulty && game.board.length) {
       generateNewGame(game.selectedDifficulty);
       console.log(3)
     }
@@ -261,7 +266,7 @@ function App() {
   return (
     <>
       <Game />
-      {/* {game.isOver && <GameOver /> } */}
+      {/* <GameOver />  */}
     </>
   )
 }

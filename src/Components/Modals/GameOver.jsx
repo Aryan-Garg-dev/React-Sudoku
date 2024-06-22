@@ -1,12 +1,38 @@
+import { useRecoilValue } from "recoil"
+import { gameStateAtom } from "../../atoms"
+import Rating from "../Rating"
+import { formatTime } from "../../functions"
+import { errorLimits } from "../../constants"
 
 const GameOver = () => {
+  const game = useRecoilValue(gameStateAtom)
   return (
-    <div className="absolute top-0 w-screen h-screen bg-[#344C64] bg-opacity-20 flex justify-center items-center">
-        <div className="relative lg:w-[40%] md:w-[50%] lg:h-[80%] md:h-[80%] bg-[#DC6B19] border-[6px] border-[#6C0345] rounded-2xl p-1">
-        <div className="h-full w-full bg-[#FFEEA9] border-[6px] border-[#F7C566] rounded-2xl flex flex-col items-center">
-            <div className="mt-2 font-copyduck text-[70px] text-red-800">Game Over</div>
+    <div className="absolute top-0 w-screen h-screen bg-gray-800 bg-opacity-20 flex justify-center items-center">
+        <div className="relative lg:w-[40%] md:w-[50%] lg:h-[80%] md:h-[80%] bg-[#5C5470] border-[6px] border-[#352F44] rounded-2xl p-1">
+        <div className="h-full w-full bg-[#FAF0E6] border-[6px] border-[#B9B4C7] rounded-2xl flex flex-col items-center gap-2 p-2">
+            <div className="mt-2 font-copyduck text-[70px] text-gray-900">Game Over</div>
+            <div className="flex items-center gap-6 w-full justify-around">
+              <div className="flex flex-col gap-1">
+                <div className="font-crackman text-4xl text-gray-900 tracking-tight">Player</div>
+                <div className="font-crackman text-4xl text-gray-900 tracking-tight">Game</div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <Rating rating={game.player.rating} />
+                <Rating rating={game.rating} />
+              </div>
+            </div>
+          <div className="flex w-full justify-around mt-2">
+            <div className="flex flex-col items-center mt-2">
+              <div className="text-3xl font-roadrage text-gray-900 tracking-wide">Time Taken</div>
+              <div className="text-5xl font-punk text-gray-900">{formatTime(game.timeSpentInSec)}</div>
+            </div>
+            <div className="flex flex-col items-center mt-2">
+              <div className="text-3xl font-roadrage text-gray-900 tracking-wide">Errors</div>
+              <div className="text-5xl font-punk text-gray-900">{game.errorCount}{'/'}{errorLimits[game.data.difficulty]}</div>
+            </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   )
 }

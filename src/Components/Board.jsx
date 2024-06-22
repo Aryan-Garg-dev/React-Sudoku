@@ -6,7 +6,7 @@ const Board = () => {
     const [ game, setGame ] = useRecoilState(gameStateAtom)
 
    return (
-    <div className={`w-fit h-fit border-[6px] m-2 border-gray-900 rounded-lg select-none`}>
+    <div className={`w-fit h-fit border-[6px] m-2 mb-3 ${!game.isRunning ? 'border-gray-700' :'border-gray-900 shadow-md shadow-gray-500'} rounded-lg select-none`}>
         <div className={`w-fit border-2 border-gray-500  flex flex-col`}>    
             {_.times(9, r => (
                 <div className='flex' key={r}>
@@ -67,6 +67,7 @@ const Board = () => {
                                                         errorCount: game.errorCount + 1
                                                     })
                                                 } else {
+                                                    //Board Changes (notes check required here)
                                                     const newBoard = _.cloneDeep(game.board);
                                                     newBoard[r][c] = game.selectedNumber;
                                                     setGame({

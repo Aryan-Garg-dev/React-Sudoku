@@ -36,6 +36,9 @@ const Timer = () => {
       highlightMoves: false,
       calledHiglightMoves: false,
 
+      makeNotes: false,
+      notes: _.chunk(Array.from(game.data.puzzle).map(num => Number(num)), 9),
+
       selectedNumber: null,
       selectedSquaresForNumber: [], 
       validSquaresForNumber: [],

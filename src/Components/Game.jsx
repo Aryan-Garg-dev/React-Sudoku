@@ -16,9 +16,11 @@ const Game = () => {
        <div className="h-screen w-full">
         <Appbar />
         <div className="grid grid-cols-2">
-          <div>
-            <Board />
-            <Numbers />
+          <div className="p-2">
+            <div className="flex flex-col items-center w-fit">
+              <Board />
+              <Numbers />
+            </div>
           </div>
           <div className="flex flex-col gap-4 pt-2 first:mb-2">
             <Rating rating={game.rating} />
