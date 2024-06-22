@@ -87,8 +87,6 @@ const Board = () => {
                                                         ...game, 
                                                         selectedSquare: { r, c },
                                                         selectedNumbersForSquare: [],
-                                                        
-                                                        invalidNumberForSquare: null,
                                                     });
                                                 } else {
                                                     setGame({
@@ -96,8 +94,6 @@ const Board = () => {
                                                         selectedSquare: { r: null, c: null },
                                                         selectedNumbersForSquare: [],
                                                         validNumbersForSquare: [],
-
-                                                        invalidNumberForSquare: null,
                                                     });
                                                 }  
                                             } else {
