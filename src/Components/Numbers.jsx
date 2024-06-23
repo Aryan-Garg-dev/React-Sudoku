@@ -76,23 +76,6 @@ const Numbers = () => {
                         if (index+1 == game.solution[r][c]){
                             const newBoard = _.cloneDeep(game.board);
                             newBoard[r][c] = index + 1;
-                            // notes check
-                            // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
-                            // for (let r = 0; r < 9; r++){
-                            //     for (let c = 0; c < 9; c++){
-                            //     const key = `${r}-${c}`;
-                            //     if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && !game.validSquaresForNumber.find(square=>square.r == r && square.c == c)){
-                            //         const newNotes = _.cloneDeep(game.notes);
-                            //         const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-                            //         newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
-                            //         newNotes[key] = newNotesArrayForSqaure;
-                            //         setGame(game=>({
-                            //             ...game,
-                            //             notes: newNotes,
-                            //         }))
-                            //     }
-                            //     }
-                            // }
                             setGame({ 
                                 ...game, 
                                 board: newBoard, 

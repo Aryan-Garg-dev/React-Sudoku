@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "./atoms";
-import { calculateGameRating, calculatePlayerRating, createNewGame } from "./functions";
+import { calculateGameRating, calculatePlayerRating, createNewGame, initializeNotes } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
 // import GameOver from "./Components/Modals/GameOver";
@@ -15,6 +15,7 @@ function App() {
   const generateNewGame = useCallback(
     (difficulty) => {
       const { data, board, solution } = createNewGame(difficulty);
+      const notes = initializeNotes();
       const newGame = {
         ...game,
         data,
@@ -35,7 +36,7 @@ function App() {
         makeNotes: false,
         invalidSquareForNumber: { r: null, c: null },
         invalidNumberForSqaure: null,
-        notes: {},
+        notes,
 
         selectedNumber: null,
         selectedSquaresForNumber: [],
@@ -114,7 +115,7 @@ function App() {
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
-    if (game.selectedDifficulty != game.data.difficulty && game.board.length) {
+    if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
       generateNewGame(game.selectedDifficulty);
       console.log(3)
     }
@@ -221,29 +222,37 @@ function App() {
           }
         }
       }
-
-      // #notes
-      // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
-      // probably use another use effect for this
-      const newNotes = _.cloneDeep(game.notes);
-      for (let r = 0; r < 9; r++){
-        for (let c = 0; c < 9; c++){
-          const key = `${r}-${c}`;
-          if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && game.validSquaresForNumber.find(square=>square.r == r && square.c == c)){
-            const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-            newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
-            newNotes[key] = newNotesArrayForSqaure;
-          }
-        }
-      }
       setGame(game=>({
         ...game,
-        notes: newNotes,
         validSquaresForNumber,
       }))
       console.log(7)
     }
   }, [game.isRunning, game.selectedNumber, game.board, setGame])
+
+  useEffect(()=>{
+    // #notes
+      // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
+      // probably use another use effect for this
+      if (game.isRunning && game.board.length && game.notes){
+
+        const newNotes = _.cloneDeep(game.notes);
+        for (let r = 0; r < 9; r++){
+          for (let c = 0; c < 9; c++){
+            const key = `${r}-${c}`;
+            if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && !game.validSquaresForNumber.find(square=>square.r == r && square.c == c)){
+              const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
+              newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
+              newNotes[key] = newNotesArrayForSqaure;
+            }
+          }
+        }
+        setGame(game=>({
+          ...game,
+          notes: newNotes,
+        }))
+      }
+    }, [game.selectedNumber, game.validSquaresForNumber, setGame])
   
   //Timer
   useEffect(() => {

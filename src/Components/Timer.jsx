@@ -5,7 +5,7 @@ import { VscDebugRestart } from "react-icons/vsc";
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
 import _ from 'lodash'
-import { formatTime } from '../functions';
+import { formatTime, initializeNotes } from '../functions';
 import ProgressBar from './ProgressBar';
 import Label from './Label';
 
@@ -22,6 +22,7 @@ const Timer = () => {
   const [game, setGame] = useRecoilState(gameStateAtom);
 
   const resetGame = useCallback(()=>{
+    const notes = initializeNotes();
     if (!game.isOver)
     setGame(game=>({
       ...game,
@@ -40,7 +41,7 @@ const Timer = () => {
       makeNotes: false,
       invalidSquareForNumber: { r: null, c: null },
       invalidNumberForSqaure: null,
-      notes: {},
+      notes,
 
       selectedNumber: null,
       selectedSquaresForNumber: [], 

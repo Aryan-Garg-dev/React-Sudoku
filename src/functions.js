@@ -37,3 +37,13 @@ export const calculatePlayerRating = (currentRating, totalGamesPlayed, thisGameR
     if (totalGamesPlayed == 0) return 0;
     return roundOffRating(rating);
 }
+
+export const initializeNotes = () => {
+    const notes = {};
+    for (let r = 0; r < 9; r++) {
+      for (let c = 0; c < 9; c++) {
+        notes[`${r}-${c}`] = [];
+      }
+    }
+    return notes;
+  };
