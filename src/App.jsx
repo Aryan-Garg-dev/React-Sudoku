@@ -224,28 +224,26 @@ function App() {
 
       // #notes
       // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
+      // probably use another use effect for this
+      const newNotes = _.cloneDeep(game.notes);
       for (let r = 0; r < 9; r++){
         for (let c = 0; c < 9; c++){
           const key = `${r}-${c}`;
-          if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && !validSquaresForNumber.find(square=>square.r == r && square.c == c)){
-            const newNotes = _.cloneDeep(game.notes);
+          if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && game.validSquaresForNumber.find(square=>square.r == r && square.c == c)){
             const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
             newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
             newNotes[key] = newNotesArrayForSqaure;
-            setGame(game=>({
-                ...game,
-                notes: newNotes,
-            }))
           }
         }
       }
       setGame(game=>({
         ...game,
+        notes: newNotes,
         validSquaresForNumber,
       }))
       console.log(7)
     }
-  }, [game.isRunning, game.selectedNumber, game.board, setGame, game.notes])
+  }, [game.isRunning, game.selectedNumber, game.board, setGame])
   
   //Timer
   useEffect(() => {
