@@ -231,9 +231,9 @@ function App() {
   }, [game.isRunning, game.selectedNumber, game.board, setGame])
 
   useEffect(()=>{
-    // #notes
+    //TODO: Logic improvements required, 
+    // #notes (auto clear notes)
       // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
-      // probably use another use effect for this
       if (game.isRunning && game.board.length && game.notes){
 
         const newNotes = _.cloneDeep(game.notes);
@@ -251,8 +251,9 @@ function App() {
           ...game,
           notes: newNotes,
         }))
+        console.log('Notes changed Here!!!');
       }
-    }, [game.selectedNumber, game.validSquaresForNumber, setGame])
+    }, [game.validSquaresForNumber, setGame])
   
   //Timer
   useEffect(() => {
