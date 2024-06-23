@@ -30,6 +30,13 @@ export const gameStateAtom = atom({
 
         calledHighlightMoves: false,
 
+        // #notes
+        makeNotes: false,
+        invalidSquareForNumber: { r: null, c: null },
+        invalidNumberForSqaure: null,
+        notes: {},
+        erasorOn: false,
+
         selectedNumber: null, // (1-9)
         selectedSquaresForNumber: [], // (wrong sqaures selected in board to fill this number with)
         validSquaresForNumber: [],

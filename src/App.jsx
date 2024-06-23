@@ -31,6 +31,12 @@ function App() {
         highlightMoves: false,
         calledHighlightMoves: false,
 
+        // #notes
+        makeNotes: false,
+        invalidSquareForNumber: { r: null, c: null },
+        invalidNumberForSqaure: null,
+        notes: {},
+
         selectedNumber: null,
         selectedSquaresForNumber: [],
         validSquaresForNumber: [],
@@ -136,7 +142,7 @@ function App() {
     }
   }, [isDisabled, setGame, game.board, game.isRunning])
 
-//Numbers (reseet selected squares and selected number if it is disabled)
+//Numbers (reset selected squares and selected number if it is disabled)
   useEffect(()=>{
       if (game.isRunning && isDisabled(game.selectedNumber) && game.board.length){
           setGame(game=>({
@@ -215,13 +221,31 @@ function App() {
           }
         }
       }
+
+      // #notes
+      // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
+      for (let r = 0; r < 9; r++){
+        for (let c = 0; c < 9; c++){
+          const key = `${r}-${c}`;
+          if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && !validSquaresForNumber.find(square=>square.r == r && square.c == c)){
+            const newNotes = _.cloneDeep(game.notes);
+            const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
+            newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
+            newNotes[key] = newNotesArrayForSqaure;
+            setGame(game=>({
+                ...game,
+                notes: newNotes,
+            }))
+          }
+        }
+      }
       setGame(game=>({
         ...game,
         validSquaresForNumber,
       }))
       console.log(7)
     }
-  }, [game.isRunning, game.selectedNumber, game.board, setGame])
+  }, [game.isRunning, game.selectedNumber, game.board, setGame, game.notes])
   
   //Timer
   useEffect(() => {

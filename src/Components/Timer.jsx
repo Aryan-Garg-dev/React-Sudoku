@@ -36,6 +36,12 @@ const Timer = () => {
       highlightMoves: false,
       calledHighlightMoves: false,
 
+      // #notes
+      makeNotes: false,
+      invalidSquareForNumber: { r: null, c: null },
+      invalidNumberForSqaure: null,
+      notes: {},
+
       selectedNumber: null,
       selectedSquaresForNumber: [], 
       validSquaresForNumber: [],

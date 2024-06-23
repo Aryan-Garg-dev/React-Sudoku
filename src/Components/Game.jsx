@@ -8,6 +8,8 @@ import Numbers from "./Numbers"
 import Rating from "./Rating"
 import Timer from './Timer'
 import { gameStateAtom } from "../atoms"
+import NotesToggle from "./NotesToggle"
+import Erasor from "./Erasor"
 
 const Game = () => {
   const game = useRecoilValue(gameStateAtom);
@@ -27,6 +29,10 @@ const Game = () => {
             <Timer />
             <Difficulty />
             <Highlight />
+            <div className="flex gap-4 items-center">
+              <NotesToggle />
+              <div className="mb-1"><Erasor /></div>
+            </div>
             <Errors />
           </div>
         </div>
