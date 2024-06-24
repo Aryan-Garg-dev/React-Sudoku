@@ -8,9 +8,8 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
  * Logic to remove star when highlightmoves is called
  */
 
-const size = 30;
 
-const Rating = ({rating}) => {
+const Rating = ({rating, size}) => {
     const fullStarsCount = Math.trunc(rating);
     const halfStarsCount = rating - fullStarsCount > 0 ? 1 : 0;
   return (
@@ -48,6 +47,7 @@ const Rating = ({rating}) => {
 
 Rating.propTypes = {
     rating: Proptypes.number,
+    size: Proptypes.number,
 }
 
 export default Rating

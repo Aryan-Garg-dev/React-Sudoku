@@ -4,7 +4,6 @@ import { gameStateAtom } from "./atoms";
 import { calculateGameRating, calculatePlayerRating, createNewGame, initializeNotes } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
-// import GameOver from "./Components/Modals/GameOver";
 import { errorLimits, timeLimit } from "./constants";
 
 function App() {
@@ -28,6 +27,7 @@ function App() {
         rating: 5,
         errorCount: 0,
         timeSpentInSec: 0,
+        selectedDifficulty: difficulty,
 
         highlightMoves: false,
         calledHighlightMoves: false,
@@ -48,11 +48,13 @@ function App() {
 
         disabledNumbers: [],
 
+        player: {...game.player},
+
       };
       setGame(newGame);
       return newGame;
     },
-    [setGame, game.selectedDifficulty]
+    [setGame]
   );
 
   // (Initializing the Game)
@@ -63,7 +65,7 @@ function App() {
       !savedGame.board.length ||
       savedGame.isOver
     ) {
-      const newGame = generateNewGame();
+      const newGame = generateNewGame('random');
       localStorage.setItem("game", JSON.stringify(newGame));
       console.log(1.1)
       console.log(newGame);
@@ -88,7 +90,7 @@ function App() {
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
         player: { ...game.player, 
-          totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
+          totalGamesPlayed: game.player.totalGamesPlayed + 1,
           rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
         },
       }));
@@ -105,17 +107,18 @@ function App() {
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
         player: { ...game.player, 
-          totalGamesPlayed: (game.player.totalGamesPlayed ? game.player.totalGamesPlayed : 0) + 1,
+          totalGamesPlayed: game.player.totalGamesPlayed + 1,
           rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
         },
       }))
       console.log(2.2);
     }
-  }, [game.board, game.solution, setGame, game.errorCount, game.disabledNumbers]);
+  }, [game.board, game.solution, setGame, game.errorCount, game.disabledNumbers, game.data.difficulty]);
 
   //Difficulty (Change in difficulty)
   useEffect(() => {
     if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
+      console.log(game);
       generateNewGame(game.selectedDifficulty);
       console.log(3)
     }
@@ -284,7 +287,6 @@ function App() {
   return (
     <>
       <Game />
-      {/* <GameOver />  */}
     </>
   )
 }

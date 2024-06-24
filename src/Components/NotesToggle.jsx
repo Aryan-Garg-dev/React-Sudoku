@@ -9,16 +9,18 @@ const NotesToggle = () => {
     <div>
         <label className="inline-flex items-center cursor-pointer">
             <input type="checkbox" value="" className="sr-only peer" checked={game.makeNotes} onChange={()=>{
-                setGame(game=>({
-                    ...game,
-                    makeNotes: !game.makeNotes,
-                    
-                    selectedNumbersForSquare: [],
-                    selectedSquaresForNumber: [],
-
-                    invalidNumberForSqaure: null,
-                    invalidSquareForNumber: { r: null, c: null },
-                }))
+                if (game.isRunning || !game.isOver){
+                    setGame(game=>({
+                        ...game,
+                        makeNotes: !game.makeNotes,
+                        
+                        selectedNumbersForSquare: [],
+                        selectedSquaresForNumber: [],
+                        
+                        invalidNumberForSqaure: null,
+                        invalidSquareForNumber: { r: null, c: null },
+                    }))
+                }
             }} />
             <div className="relative w-10 h-5 bg-[#6B8A7A] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[20px] rtl:peer-checked:after:-translate-x-[20px] after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#E8EFCF] peer-checked:after:bg-[#DAD3BE]  after:rounded-full after:h-4 after:w-4 after:transition-al peer-checked:bg-[#254336]
             peer-hover:after:border-2 peer-hover:after:border-[#6B8A7A] peer-hover:peer-checked:after:border-[#254336] ">

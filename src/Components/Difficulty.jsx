@@ -23,7 +23,7 @@ const Difficulty = () => {
                 {difficultyOptions[game.selectedDifficulty] || 'Challenge'}</div>
             <div className="absolute rounded-sm hidden group-hover:flex flex-col border-[3px] border-red-800 text-[#973131] text-xl font-arcade bg-[#F5E7B2] p-2 px-4 w-full cursor-pointer select-none z-10 shadow-inner shadow-red-950">
                 {Object.keys(difficultyOptions).map(key=>{
-                    if (!game.selectedDifficulty || key != game.selectedDifficulty){
+                    if (key != game.selectedDifficulty){
                         return <div 
                             className="option" 
                             key={key}
@@ -34,14 +34,14 @@ const Difficulty = () => {
                         >{difficultyOptions[key]}</div>
                     }
                 })}
-                {game.selectedDifficulty && (
+                {game.selectedDifficulty != 'random' && (
                     <div 
                         className="option"
                         onClick={()=>{
                             if (game.selectedDifficulty){
                                 setGame({
                                     ...game,
-                                    selectedDifficulty: "",
+                                    selectedDifficulty: "random",
                                 })
                             }
                         }}
