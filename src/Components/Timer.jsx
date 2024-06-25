@@ -8,7 +8,6 @@ import _ from 'lodash'
 import { formatTime, initializeNotes } from '../functions';
 import ProgressBar from './ProgressBar';
 import Label from './Label';
-import { BoardPressAudio, GameStartAudio } from '../../public';
 
 /**
  * @todo 
@@ -21,14 +20,10 @@ import { BoardPressAudio, GameStartAudio } from '../../public';
 
 const Timer = () => {
   const [game, setGame] = useRecoilState(gameStateAtom);
-  const ResetAudio = new Audio(GameStartAudio);
-  const ClickAudio = new Audio(BoardPressAudio);
-  ClickAudio.volume = 0.8;
 
   const resetGame = useCallback(()=>{
     const notes = initializeNotes();
     if (!game.isOver){
-      ResetAudio.play();
       setGame(game=>({
         ...game,
         
@@ -73,7 +68,6 @@ const Timer = () => {
                     className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-green-600 hover:text-white outline-none"
                     onClick={() => { 
                       if (!game.isOver){
-                        ClickAudio.play();
                         setGame({
                           ...game,
                           isRunning: true,
@@ -86,7 +80,6 @@ const Timer = () => {
                 : <button
                   className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-red-600 hover:text-white outline-none"
                   onClick={() =>{
-                    ClickAudio.play();
                     setGame({
                       ...game,
                       isRunning: false,

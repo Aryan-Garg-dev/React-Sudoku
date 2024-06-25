@@ -2,8 +2,6 @@ import _  from 'lodash'
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
 import { useCallback } from 'react';
-import { ButtonPressAudio } from '../../public';
-
 /**
  * @todo
  * css logic of notes feature
@@ -11,8 +9,6 @@ import { ButtonPressAudio } from '../../public';
 
 const Board = () => {
     const [ game, setGame ] = useRecoilState(gameStateAtom)
-    const ClickAudio = new Audio(ButtonPressAudio)
-    ClickAudio.volume = 0.3;
 
     const highlightRowColBox = useCallback((r, c)=>(
         (game.selectedSquare.r != null && game.selectedSquare.c != null) && (game.selectedSquare.r == r || game.selectedSquare.c == c || _.range(Math.floor(game.selectedSquare.r/3)*3, Math.floor(game.selectedSquare.r/3)*3+3).includes(r) && _.range(Math.floor(game.selectedSquare.c/3)*3, Math.floor(game.selectedSquare.c/3)*3+3).includes(c)) && game.highlightSquares
@@ -88,7 +84,6 @@ const Board = () => {
                                 key={r*9+c} 
                                 onClick={()=>{
                                     if (game.isRunning){
-                                        ClickAudio.play().catch(err=>console.log(err));
                                         // When number is not selected and sqaure is being selected, 
                                         // if it is an empty sqaure, it will be selected,
                                         // else prev selected sqaure will be unselected if any

@@ -2,18 +2,14 @@ import { useRecoilState } from "recoil"
 import { gameStateAtom } from "../atoms"
 import { FaPen } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { BoardPressAudio, } from "../../public";
 
 const NotesToggle = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
-    const ClickAudio = new Audio(BoardPressAudio);
-    ClickAudio.volume = 0.8;
   return (
     <div>
         <label className="inline-flex items-center cursor-pointer">
             <input type="checkbox" value="" className="sr-only peer" checked={game.makeNotes} onChange={()=>{
                 if (game.isRunning || !game.isOver){
-                    ClickAudio.play();
                     setGame(game=>({
                         ...game,
                         makeNotes: !game.makeNotes,

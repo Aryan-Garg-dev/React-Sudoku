@@ -1,16 +1,12 @@
 import { BsEraserFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "../atoms";
-import { BoardPressAudio } from "../../public";
 
 const Erasor = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
-    const ClickAudio = new Audio(BoardPressAudio);
-    ClickAudio.volume = 0.8;
   return (
     <div className="cursor-pointer" 
         onClick={()=>{
-          ClickAudio.play();
           setGame({
           ...game,
           erasorOn: !game.erasorOn,

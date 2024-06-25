@@ -1,12 +1,9 @@
 import _ from 'lodash';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
-import { ButtonPressAudio } from '../../public';
 
 const Numbers = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
-    const ClickAudio = new Audio(ButtonPressAudio)
-    ClickAudio.volume = 0.3;
     
   return (
     <div className='flex w-fit gap-[5px]'>
@@ -36,7 +33,6 @@ const Numbers = () => {
             key={index}
             onClick={()=>{
                 if (game.isRunning && !game.erasorOn){
-                    ClickAudio.play().catch(err=>console.log(err));
                     //When Empty Square is selected, Number has to be selected
                     if (game.selectedSquare.r != null && game.selectedSquare.c != null && !game.disabledNumbers.includes(index+1)){
                         if (game.makeNotes){
