@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "./atoms";
-import { calculateGameRating, calculatePlayerRating, createNewGame, initializeNotes } from "./functions";
+import { calculateGameRating, createNewGame, initializeNotes } from "./functions";
 import _ from 'lodash'
 import Game from "./Components/Game";
 import { errorLimits, timeLimit } from "./constants";
@@ -48,8 +48,6 @@ function App() {
 
         disabledNumbers: [],
 
-        player: {...game.player},
-
       };
       setGame(newGame);
       return newGame;
@@ -89,10 +87,6 @@ function App() {
         isOver: true,
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
-        player: { ...game.player, 
-          totalGamesPlayed: game.player.totalGamesPlayed + 1,
-          rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
-        },
       }));
       console.log(2)
 
@@ -106,10 +100,6 @@ function App() {
         isOver: true,
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
-        player: { ...game.player, 
-          totalGamesPlayed: game.player.totalGamesPlayed + 1,
-          rating: calculatePlayerRating(game.player.rating, game.player.totalGamesPlayed + 1, gameRating),
-        },
       }))
       console.log(2.2);
     }
@@ -158,45 +148,52 @@ function App() {
       }
   }, [isDisabled, setGame, game.selectedNumber, game.isRunning, game.board.length]);
 
+  const getValidNumbersForSquare = useCallback((r, c)=>{
+    if (r != null && c != null){
+      const validNumbers = _.range(1, 10);
+      for (let i = 0; i < 3; i++){
+        for (let j = 0; j < 3; j++){
+          const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
+          if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
+            const index = validNumbers.indexOf(game.board[x+i][y+j]);
+            validNumbers.splice(index, 1)
+          }
+        }
+      }
+        
+      for (let i = 0; i < 9; i++){
+        if (validNumbers.includes(game.board[i][c])){
+          const index =validNumbers.indexOf(game.board[i][c])
+          validNumbers.splice(index, 1)
+        }
+      }
+          
+      for (let j = 0; j < 9; j++){
+        if (validNumbers.includes(game.board[r][j])){
+          const index =validNumbers.indexOf(game.board[r][j])
+          validNumbers.splice(index, 1)
+        }
+      }
+      return validNumbers;
+    } else {
+      return [];
+    }
+  }, [game.board])
+
 //Numbers (move hints for selected square)
   useEffect(()=>{
     if (game.isRunning && game.board.length){
       const r = game.selectedSquare.r;
       const c = game.selectedSquare.c;
-      if (r != null && c != null){
-        const validNumbers = _.range(1, 10);
-        for (let i = 0; i < 3; i++){
-          for (let j = 0; j < 3; j++){
-            const [ x, y ] = [ Math.floor(r/3)*3, Math.floor(c/3)*3 ];
-            if ((x+i != r || y+j != c) && game.board[x+i][y+j]){
-              const index = validNumbers.indexOf(game.board[x+i][y+j]);
-              validNumbers.splice(index, 1)
-            }
-          }
-        }
-          
-        for (let i = 0; i < 9; i++){
-          if (validNumbers.includes(game.board[i][c])){
-            const index =validNumbers.indexOf(game.board[i][c])
-            validNumbers.splice(index, 1)
-          }
-        }
-            
-        for (let j = 0; j < 9; j++){
-          if (validNumbers.includes(game.board[r][j])){
-            const index =validNumbers.indexOf(game.board[r][j])
-            validNumbers.splice(index, 1)
-          }
-        }
+      const validNumbers = getValidNumbersForSquare(r, c);
               
         setGame(game=>({
           ...game,
           validNumbersForSquare: validNumbers,
         }))
+        console.log(6)
       }
-      console.log(6)
-    }
-  }, [game.board, game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning])
+  }, [game.selectedSquare, game.selectedSquare.c, game.selectedSquare.r, setGame, game.isRunning, getValidNumbersForSquare, game.board.length])
 
   //Board (valid squares for selected number)
   useEffect(()=>{
@@ -234,7 +231,7 @@ function App() {
   }, [game.isRunning, game.selectedNumber, game.board, setGame])
 
   useEffect(()=>{
-    //TODO: Logic improvements required, 
+    //TODO: Logic improvements required, :DONE
     // #notes (auto clear notes)
       // Logic to remove extra copies of selected number from row, col, or box if its already present in any of them
       if (game.isRunning && game.board.length && game.notes){
@@ -243,9 +240,13 @@ function App() {
         for (let r = 0; r < 9; r++){
           for (let c = 0; c < 9; c++){
             const key = `${r}-${c}`;
-            if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber) && !game.validSquaresForNumber.find(square=>square.r == r && square.c == c)){
-              const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-              newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
+            const validNumbersForSqaure = getValidNumbersForSquare(r, c);
+            if (game.notes[key] 
+              && game.notes[key].length 
+              && game.notes[key].find(num=>!validNumbersForSqaure.includes(num))
+            ){
+              let newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
+              newNotesArrayForSqaure = newNotesArrayForSqaure.filter(num=>validNumbersForSqaure.includes(num))
               newNotes[key] = newNotesArrayForSqaure;
             }
           }

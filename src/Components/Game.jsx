@@ -20,9 +20,10 @@ const Game = () => {
        <div className="h-screen w-full">
         <Appbar />
         <motion.div
+        initial = {{ opacity: 0 }}
         animate = {{ 
-          opacity: [0.25, 1],
-          scale: [0, 1],
+          opacity: 1,
+          scale: [0.9, 1]
         }}
         transition={{
           duration: 1,
@@ -35,17 +36,19 @@ const Game = () => {
                 <Numbers />
               </div>
             </div>
-            <div className="flex flex-col gap-4 pt-2 first:mb-2">
-              <Rating rating={game.rating} size={30} />
-              <Timer />
-              <Difficulty />
-              <Highlight />
-              <div className="flex gap-4 items-center">
-                <NotesToggle />
-                <div className="mb-1"><Erasor /></div>
+            <div>
+              <div className="flex flex-col gap-4 pt-2 first:mb-2">
+                <Rating rating={game.rating} size={30} />
+                <Timer />
+                <Difficulty />
+                <Highlight />
+                <div className="flex gap-4 items-center">
+                  <NotesToggle />
+                  <div className="mb-1"><Erasor /></div>
+                </div>
+                <Errors />
               </div>
-              <Errors />
-              <NewGameButton />
+              <div className="mt-5"><NewGameButton /></div>
             </div>
           </div>
         </motion.div>
