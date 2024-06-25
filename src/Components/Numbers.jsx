@@ -1,9 +1,12 @@
 import _ from 'lodash';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
+import { ButtonPressAudio } from '../../public';
 
 const Numbers = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
+    const ClickAudio = new Audio(ButtonPressAudio)
+    ClickAudio.volume = 0.3;
     
   return (
     <div className='flex w-fit gap-[5px]'>
@@ -32,93 +35,96 @@ const Numbers = () => {
             
             key={index}
             onClick={()=>{
-                if (game.isRunning && !game.erasorOn)
-                //When Empty Square is selected, Number has to be selected
-                if (game.selectedSquare.r != null && game.selectedSquare.c != null && !game.disabledNumbers.includes(index+1)){
-                    if (game.makeNotes){
-                        if (!game.validNumbersForSquare.includes(index+1)){
-                            setGame(game=>({
-                                ...game,
-                                invalidNumberForSqaure: index + 1,
-                            }))
-                        } else {
-                           const { r, c } = game.selectedSquare;
-                           const key = `${r}-${c}`;
-                           const newNotes = _.cloneDeep(game.notes);
-                           if (game.notes[key] && game.notes[key].length && game.notes[key].includes(index+1)){
-                                const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-                                newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(index+1), 1);
-                                newNotes[key] = newNotesArrayForSqaure;
-                                setGame({
+                if (game.isRunning && !game.erasorOn){
+                    ClickAudio.play().catch(err=>console.log(err));
+                    //When Empty Square is selected, Number has to be selected
+                    if (game.selectedSquare.r != null && game.selectedSquare.c != null && !game.disabledNumbers.includes(index+1)){
+                        if (game.makeNotes){
+                            if (!game.validNumbersForSquare.includes(index+1)){
+                                setGame(game=>({
                                     ...game,
-                                    notes: newNotes,
-    
-                                    invalidNumberForSqaure: null,
-                                })
-                            }  else {
-                                const newNotesArrayForSqaure = [];
-                                if (!game.notes[key] || !game.notes[key].length){
-                                    newNotesArrayForSqaure.push(index+1);
-                                } else {
-                                    newNotesArrayForSqaure.push(...game.notes[key], index+1);
+                                    invalidNumberForSqaure: index + 1,
+                                }))
+                            } else {
+                               const { r, c } = game.selectedSquare;
+                               const key = `${r}-${c}`;
+                               const newNotes = _.cloneDeep(game.notes);
+                               if (game.notes[key] && game.notes[key].length && game.notes[key].includes(index+1)){
+                                    const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
+                                    newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(index+1), 1);
+                                    newNotes[key] = newNotesArrayForSqaure;
+                                    setGame({
+                                        ...game,
+                                        notes: newNotes,
+        
+                                        invalidNumberForSqaure: null,
+                                    })
+                                }  else {
+                                    const newNotesArrayForSqaure = [];
+                                    if (!game.notes[key] || !game.notes[key].length){
+                                        newNotesArrayForSqaure.push(index+1);
+                                    } else {
+                                        newNotesArrayForSqaure.push(...game.notes[key], index+1);
+                                    }
+                                    newNotes[key] = newNotesArrayForSqaure;
+                                    setGame({
+                                        ...game,
+                                        notes: newNotes,
+        
+                                        invalidNumberForSqaure: null,
+                                    })
                                 }
-                                newNotes[key] = newNotesArrayForSqaure;
+                            }
+                        } else {
+                            const { r, c } = game.selectedSquare;
+                            if (index+1 == game.solution[r][c]){
+                                const newBoard = _.cloneDeep(game.board);
+                                newBoard[r][c] = index + 1;
+                                setGame({ 
+                                    ...game, 
+                                    board: newBoard, 
+                                    selectedSquare: { r: null, c: null },
+                                    selectedNumbersForSquare: [],
+                                    validNumbersForSquare: [],
+                                })
+                            } else {
+                                if (!game.selectedNumbersForSquare.includes(index+1) && !game.disabledNumbers.includes(index+1))
+                                    setGame({
+                                        ...game,
+                                        selectedNumbersForSquare: [...game.selectedNumbersForSquare, index+1],
+                                        errorCount: game.errorCount + 1
+                                    })
+                                }
+                            }
+                    } else {
+                        // When number is selected, another number is being selected or that number is being unselected
+                        // if its a valid number it will be selected,
+                        // else prev selected number will be unselected
+                        if (!game.disabledNumbers.includes(index+1)){
+                            if (game.selectedNumber != index + 1){
                                 setGame({
                                     ...game,
-                                    notes: newNotes,
+                                    selectedNumber: index + 1,
+                                    selectedSquaresForNumber: [],
     
+                                    // #notes
+                                    invalidNumberForSqaure: null,
+                                })
+                            } else {
+                                setGame({
+                                    ...game,
+                                    selectedNumber: null,
+                                    selectedSquaresForNumber: [],
+                                    validSquaresForNumber: [],
+    
+                                    // #notes
                                     invalidNumberForSqaure: null,
                                 })
                             }
-                        }
-                    } else {
-                        const { r, c } = game.selectedSquare;
-                        if (index+1 == game.solution[r][c]){
-                            const newBoard = _.cloneDeep(game.board);
-                            newBoard[r][c] = index + 1;
-                            setGame({ 
-                                ...game, 
-                                board: newBoard, 
-                                selectedSquare: { r: null, c: null },
-                                selectedNumbersForSquare: [],
-                                validNumbersForSquare: [],
-                            })
-                        } else {
-                            if (!game.selectedNumbersForSquare.includes(index+1) && !game.disabledNumbers.includes(index+1))
-                                setGame({
-                                    ...game,
-                                    selectedNumbersForSquare: [...game.selectedNumbersForSquare, index+1],
-                                    errorCount: game.errorCount + 1
-                                })
-                            }
-                        }
-                } else {
-                    // When number is selected, another number is being selected or that number is being unselected
-                    // if its a valid number it will be selected,
-                    // else prev selected number will be unselected
-                    if (!game.disabledNumbers.includes(index+1)){
-                        if (game.selectedNumber != index + 1){
-                            setGame({
-                                ...game,
-                                selectedNumber: index + 1,
-                                selectedSquaresForNumber: [],
-
-                                // #notes
-                                invalidNumberForSqaure: null,
-                            })
-                        } else {
-                            setGame({
-                                ...game,
-                                selectedNumber: null,
-                                selectedSquaresForNumber: [],
-                                validSquaresForNumber: [],
-
-                                // #notes
-                                invalidNumberForSqaure: null,
-                            })
                         }
                     }
-                }
+
+                }  
             }}
             >
                 {index+1}

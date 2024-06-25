@@ -21,6 +21,7 @@ export const gameStateAtom = atom({
         selectedDifficulty: "", // (random: "" || easy || medium || hard || expert)
         isRunning: false, // (true || false)
         isOver: false,  // (true || false)
+        hasWon: false,
         rating: 5,
         errorCount: 0, // (errors)
         timeSpentInSec: 0,

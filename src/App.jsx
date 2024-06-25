@@ -5,10 +5,13 @@ import { calculateGameRating, createNewGame, initializeNotes } from "./functions
 import _ from 'lodash'
 import Game from "./Components/Game";
 import { errorLimits, timeLimit } from "./constants";
+import { GameLostAudio, GameStartAudio, GameWonAudio } from "../public";
 
 function App() {
 
   const [ game, setGame ] = useRecoilState(gameStateAtom)
+  const gameLostAudio = new Audio(GameLostAudio);
+  const gameWonAudio = new Audio(GameWonAudio);
 
   // (Function to generate and set the new game state)
   const generateNewGame = useCallback(
@@ -24,6 +27,7 @@ function App() {
 
         isRunning: true,
         isOver: false,
+        hasWon: false,
         rating: 5,
         errorCount: 0,
         timeSpentInSec: 0,
@@ -79,13 +83,16 @@ function App() {
 
   //Game Over
   useEffect(() => {
+
     if ( game.board.length && game.solution.length )
     if (_.flattenDeep(game.board).join("") === _.flattenDeep(game.solution).join("") || game.errorCount >= errorLimits[game.data.difficulty]){
       const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
+      (game.errorCount >= errorLimits[game.data.difficulty]) ? gameLostAudio.play() : gameWonAudio.play();
       setGame(game=>({
         ...game,
         isOver: true,
         isRunning: false,
+        hasWon:  !(game.errorCount >= errorLimits[game.data.difficulty]),
         rating: gameRating > 0 ? gameRating : 0,
       }));
       console.log(2)
@@ -93,11 +100,13 @@ function App() {
     // Auto fill the last number
     } else if (game.disabledNumbers.length == 8){
       const gameRating = calculateGameRating(game.timeSpentInSec, timeLimit[game.data.difficulty], game.errorCount, errorLimits[game.data.difficulty]) - (game.calledHighlightMoves ? 1 : 0);
+      gameWonAudio.play();
       setGame(game=>({
         ...game,
         board: game.solution,
         disabledNumbers: _.range(1, 10),
         isOver: true,
+        hasWon: true,
         isRunning: false,
         rating: gameRating > 0 ? gameRating : 0,
       }))
@@ -109,6 +118,7 @@ function App() {
   useEffect(() => {
     if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
       console.log(game);
+      new Audio(GameStartAudio).play();
       generateNewGame(game.selectedDifficulty);
       console.log(3)
     }

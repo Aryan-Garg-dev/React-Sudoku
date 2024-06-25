@@ -8,6 +8,7 @@ import _ from 'lodash'
 import { formatTime, initializeNotes } from '../functions';
 import ProgressBar from './ProgressBar';
 import Label from './Label';
+import { BoardPressAudio, GameStartAudio } from '../../public';
 
 /**
  * @todo 
@@ -20,39 +21,44 @@ import Label from './Label';
 
 const Timer = () => {
   const [game, setGame] = useRecoilState(gameStateAtom);
+  const ResetAudio = new Audio(GameStartAudio);
+  const ClickAudio = new Audio(BoardPressAudio);
+  ClickAudio.volume = 0.8;
 
   const resetGame = useCallback(()=>{
     const notes = initializeNotes();
-    if (!game.isOver)
-    setGame(game=>({
-      ...game,
-
-      board: _.chunk(Array.from(game.data.puzzle).map(num => Number(num)), 9),
-
-      isRunning: true,
-      rating: 5,
-      errorCount: 0,
-      timeSpentInSec: 0,
-
-      highlightMoves: false,
-      calledHighlightMoves: false,
-
-      // #notes
-      makeNotes: false,
-      invalidSquareForNumber: { r: null, c: null },
-      invalidNumberForSqaure: null,
-      notes,
-
-      selectedNumber: null,
-      selectedSquaresForNumber: [], 
-      validSquaresForNumber: [],
-
-      selectedSquare: { r: null, c: null },
-      selectedNumbersForSquare: [],
-      validNumbersForSquare: [],
-
-      disabledNumbers: [],
-    }))
+    if (!game.isOver){
+      ResetAudio.play();
+      setGame(game=>({
+        ...game,
+        
+        board: _.chunk(Array.from(game.data.puzzle).map(num => Number(num)), 9),
+        
+        isRunning: true,
+        rating: 5,
+        errorCount: 0,
+        timeSpentInSec: 0,
+        
+        highlightMoves: false,
+        calledHighlightMoves: false,
+        
+        // #notes
+        makeNotes: false,
+        invalidSquareForNumber: { r: null, c: null },
+        invalidNumberForSqaure: null,
+        notes,
+        
+        selectedNumber: null,
+        selectedSquaresForNumber: [], 
+        validSquaresForNumber: [],
+        
+        selectedSquare: { r: null, c: null },
+        selectedNumbersForSquare: [],
+        validNumbersForSquare: [],
+        
+        disabledNumbers: [],
+      }))
+    }
   }, [setGame, game.isOver])
 
   return (
@@ -66,21 +72,25 @@ const Timer = () => {
                 ? <button
                     className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-green-600 hover:text-white outline-none"
                     onClick={() => { 
-                      if (!game.isOver)
-                      setGame({
-                      ...game,
-                      isRunning: true,
-                    })
+                      if (!game.isOver){
+                        ClickAudio.play();
+                        setGame({
+                          ...game,
+                          isRunning: true,
+                        })
+                      }
                     }}
                     >
                     <FaPlay size={12} />
                   </button>
                 : <button
                   className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-red-600 hover:text-white outline-none"
-                  onClick={() => setGame({
-                    ...game,
-                    isRunning: false,
-                  })}
+                  onClick={() =>{
+                    ClickAudio.play();
+                    setGame({
+                      ...game,
+                      isRunning: false,
+                    })}}
                   >
                     <FaPause size={12} />
                   </button>

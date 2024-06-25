@@ -38,7 +38,7 @@ const Game = () => {
             </div>
             <div>
               <div className="flex flex-col gap-4 pt-2 first:mb-2">
-                <Rating rating={game.rating} size={30} />
+                <Rating rating={game.rating} size={32} />
                 <Timer />
                 <Difficulty />
                 <Highlight />

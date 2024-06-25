@@ -1,11 +1,11 @@
 // import { FaStar } from "react-icons/fa"
 import { sudokuLogo } from "../../public"
 import { motion } from 'framer-motion'
-// import { useRecoilValue } from "recoil"
-// import { gameStateAtom } from "../atoms"
+import { useRecoilValue } from "recoil"
+import { gameStateAtom } from "../atoms"
 
 const Appbar = () => {
-  // const game = useRecoilValue(gameStateAtom);
+  const game = useRecoilValue(gameStateAtom);
   return (
     <div className="border-b shadow-md rounded-lg flex justify-between">
       <div className='flex items-center gap-3 m-2 ml-4'> 
@@ -39,6 +39,25 @@ const Appbar = () => {
         >
           Sudoku
         </motion.div>
+      </div>
+      <div className="flex items-center">
+        {game.isOver &&
+              <motion.div 
+                className="text-5xl font-coffee mr-20"
+                animate = {{
+                  scale: [1, 1.15, 1, 0.85, 1]
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                }}
+              >
+                {game.hasWon 
+                  ? <div className="text-green-600">Good Job</div>
+                  : <div className="text-red-600">Game Over</div>
+                }
+              </motion.div>
+        }
       </div>
       {/* <motion.div
         className="flex justify-center items-center mx-2 gap-2"

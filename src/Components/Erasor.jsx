@@ -1,20 +1,25 @@
 import { BsEraserFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { gameStateAtom } from "../atoms";
+import { BoardPressAudio } from "../../public";
 
 const Erasor = () => {
     const [game, setGame] = useRecoilState(gameStateAtom);
+    const ClickAudio = new Audio(BoardPressAudio);
+    ClickAudio.volume = 0.8;
   return (
     <div className="cursor-pointer" 
-        onClick={()=>setGame({
-        ...game,
-        erasorOn: !game.erasorOn,
-        //TODO: Not completely sure on these below
-        selectedNumber: null,
-        selectedSquare: { r: null, c: null },
-        selectedNumbersForSquare: [],
-        selectedSquaresForNumber: [],
-    })}>
+        onClick={()=>{
+          ClickAudio.play();
+          setGame({
+          ...game,
+          erasorOn: !game.erasorOn,
+          //TODO: Not completely sure on these below
+          selectedNumber: null,
+          selectedSquare: { r: null, c: null },
+          selectedNumbersForSquare: [],
+          selectedSquaresForNumber: [],
+        })}}>
         <div className={`relative peer p-1.5 border-2 border-[#254336] rounded-xl active:translate-y-0.5
          ${game.erasorOn ? 'shadow-none bg-[#43766C] text-white' : 'shadow-sm shadow-gray-800 text-[#254336]'}
         `}>

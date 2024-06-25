@@ -2,6 +2,7 @@ import _  from 'lodash'
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../atoms';
 import { useCallback } from 'react';
+import { ButtonPressAudio } from '../../public';
 
 /**
  * @todo
@@ -10,6 +11,8 @@ import { useCallback } from 'react';
 
 const Board = () => {
     const [ game, setGame ] = useRecoilState(gameStateAtom)
+    const ClickAudio = new Audio(ButtonPressAudio)
+    ClickAudio.volume = 0.3;
 
     const highlightRowColBox = useCallback((r, c)=>(
         (game.selectedSquare.r != null && game.selectedSquare.c != null) && (game.selectedSquare.r == r || game.selectedSquare.c == c || _.range(Math.floor(game.selectedSquare.r/3)*3, Math.floor(game.selectedSquare.r/3)*3+3).includes(r) && _.range(Math.floor(game.selectedSquare.c/3)*3, Math.floor(game.selectedSquare.c/3)*3+3).includes(c)) && game.highlightSquares
@@ -84,107 +87,109 @@ const Board = () => {
                                         
                                 key={r*9+c} 
                                 onClick={()=>{
-                                    if (game.isRunning)
+                                    if (game.isRunning){
+                                        ClickAudio.play().catch(err=>console.log(err));
                                         // When number is not selected and sqaure is being selected, 
                                         // if it is an empty sqaure, it will be selected,
                                         // else prev selected sqaure will be unselected if any
-                                    if (!game.selectedNumber){
+                                        if (!game.selectedNumber){
                                         // erasor logic
-                                        if (game.erasorOn){
-                                            const key = `${r}-${c}`;
-                                            if (game.notes[key] && game.notes[key].length){
-                                                const newNotes = _.cloneDeep(game.notes);
-                                                newNotes[key] = [];
-                                                setGame(game=>({
-                                                    ...game,
-                                                    notes: newNotes,
-                                                }))
+                                            if (game.erasorOn){
+                                                const key = `${r}-${c}`;
+                                                if (game.notes[key] && game.notes[key].length){
+                                                    const newNotes = _.cloneDeep(game.notes);
+                                                    newNotes[key] = [];
+                                                    setGame(game=>({
+                                                        ...game,
+                                                        notes: newNotes,
+                                                    }))
+                                                }
                                             }
-                                        }
-                                        else {
-                                            if ((game.selectedSquare.r != r || game.selectedSquare.c != c) && game.data.puzzle[r*9+c]=='-'){
-                                                setGame({
-                                                ...game, 
-                                                selectedSquare: { r, c },
-                                                selectedNumbersForSquare: [],
-
-                                                // #notes
-                                                invalidNumberForSqaure: null,
-                                            });
+                                            else {
+                                                if ((game.selectedSquare.r != r || game.selectedSquare.c != c) && game.data.puzzle[r*9+c]=='-'){
+                                                    setGame({
+                                                    ...game, 
+                                                    selectedSquare: { r, c },
+                                                    selectedNumbersForSquare: [],
+                                                    
+                                                    // #notes
+                                                    invalidNumberForSqaure: null,
+                                                });
+                                                } else {
+                                                    setGame({
+                                                        ...game, 
+                                                        selectedSquare: { r: null, c: null },
+                                                        selectedNumbersForSquare: [],
+                                                        validNumbersForSquare: [],
+                                                        
+                                                        //#notes
+                                                        invalidNumberForSqaure: null,
+                                                    });
+                                                }  
+                                            }
                                         } else {
-                                            setGame({
-                                                ...game, 
-                                                selectedSquare: { r: null, c: null },
-                                                selectedNumbersForSquare: [],
-                                                validNumbersForSquare: [],
-                                                
-                                                //#notes
-                                                invalidNumberForSqaure: null,
-                                            });
-                                        }  
-                                    }
-                                    } else {
                                         // #notes
                                         // number is selected and sqaure is being selected for it
-                                        if (game.makeNotes){
-                                            if (!game.validSquaresForNumber.find(sqaure=>sqaure.r == r && sqaure.c == c)){
-                                                setGame(game=>({
-                                                    ...game,
-                                                    invalidSquareForNumber: { r, c },
-                                                }))
-                                            } else {
-                                                const key = `${r}-${c}`;
-                                                // logic for 
-                                                // if selected number is already in notes then remove it from there
-                                                const newNotes = _.cloneDeep(game.notes);
-                                                if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber)){
-                                                    const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-                                                    newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
-                                                    newNotes[key] = newNotesArrayForSqaure;
-                                                    console.log('number already there', newNotes);
-                                                    setGame({
+                                            if (game.makeNotes){
+                                                if (!game.validSquaresForNumber.find(sqaure=>sqaure.r == r && sqaure.c == c)){
+                                                    setGame(game=>({
                                                         ...game,
-                                                        notes: newNotes,
-                                                        invalidSquareForNumber: { r: null, c: null },
-                                                    })
-                                                // else append to the array
+                                                        invalidSquareForNumber: { r, c },
+                                                    }))
                                                 } else {
-                                                    const newNotesArrayForSqaure = [];
-                                                    if (!game.notes[key] || !game.notes[key].length) {
-                                                        newNotesArrayForSqaure.push(game.selectedNumber);
-                                                        console.log('new key');
+                                                    const key = `${r}-${c}`;
+                                                    // logic for 
+                                                    // if selected number is already in notes then remove it from there
+                                                    const newNotes = _.cloneDeep(game.notes);
+                                                    if (game.notes[key] && game.notes[key].length && game.notes[key].includes(game.selectedNumber)){
+                                                        const newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
+                                                        newNotesArrayForSqaure.splice(newNotesArrayForSqaure.indexOf(game.selectedNumber), 1);
+                                                        newNotes[key] = newNotesArrayForSqaure;
+                                                        console.log('number already there', newNotes);
+                                                        setGame({
+                                                            ...game,
+                                                            notes: newNotes,
+                                                            invalidSquareForNumber: { r: null, c: null },
+                                                        })
+                                                // else append to the array
                                                     } else {
-                                                        newNotesArrayForSqaure.push(...game.notes[key], game.selectedNumber);
-                                                        console.log('old key');
+                                                        const newNotesArrayForSqaure = [];
+                                                        if (!game.notes[key] || !game.notes[key].length) {
+                                                            newNotesArrayForSqaure.push(game.selectedNumber);
+                                                            console.log('new key');
+                                                        } else {
+                                                            newNotesArrayForSqaure.push(...game.notes[key], game.selectedNumber);
+                                                            console.log('old key');
+                                                        }
+                                                        newNotes[key] = newNotesArrayForSqaure;
+                                                        console.log('appending number to notes array', newNotes);
+                                                        setGame({
+                                                            ...game,
+                                                            notes: newNotes,
+                                                            invalidSquareForNumber: { r: null, c: null },
+                                                        })
                                                     }
-                                                    newNotes[key] = newNotesArrayForSqaure;
-                                                    console.log('appending number to notes array', newNotes);
+                                                }
+                                            } else {
+                                                if (game.solution[r][c]!=game.selectedNumber){
                                                     setGame({
                                                         ...game,
-                                                        notes: newNotes,
-                                                        invalidSquareForNumber: { r: null, c: null },
+                                                        selectedSquaresForNumber: [...game.selectedSquaresForNumber,    { r, c }],
+                                                        errorCount: game.errorCount + 1
+                                                    })
+                                                } else {
+                                                    const newBoard = _.cloneDeep(game.board);
+                                                    newBoard[r][c] = game.selectedNumber;
+                                                    setGame({
+                                                        ...game,
+                                                    board: newBoard,
                                                     })
                                                 }
                                             }
                                         }
-                                        else {
-                                            if (game.solution[r][c]!=game.selectedNumber){
-                                                setGame({
-                                                    ...game,
-                                                    selectedSquaresForNumber: [...game.selectedSquaresForNumber, { r, c }],
-                                                    errorCount: game.errorCount + 1
-                                                })
-                                            } else {
-                                                const newBoard = _.cloneDeep(game.board);
-                                                newBoard[r][c] = game.selectedNumber;
-                                                setGame({
-                                                    ...game,
-                                                    board: newBoard,
-                                                })
-                                            }
-                                        }
                                     }
-                                }}
+                                }
+                            }
                                 >
                                 {(game.isRunning || game.isOver) && game.board.length && game.board[r][c]
                                     ? game.board[r][c]
