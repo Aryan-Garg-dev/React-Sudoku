@@ -14,7 +14,9 @@ const Erasor = () => {
           selectedNumber: null,
           selectedSquare: { r: null, c: null },
           selectedNumbersForSquare: [],
+          validNumbersForSquare: [],
           selectedSquaresForNumber: [],
+          validSquaresForNumber: [],
         })}}>
         <div className={`relative peer p-1.5 border-2 border-[#254336] rounded-xl active:translate-y-0.5
          ${game.erasorOn ? 'shadow-none bg-[#43766C] text-white' : 'shadow-sm shadow-gray-800 text-[#254336]'}
