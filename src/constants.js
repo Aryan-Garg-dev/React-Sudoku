@@ -11,3 +11,10 @@ export const errorLimits = {
     'hard': 8,
     'expert': 10,
 }
+
+export const difficultyOptions = {
+    'easy': 'rookie',
+    'medium': 'standard',
+    'hard': 'master',
+    'expert': 'legend'
+}

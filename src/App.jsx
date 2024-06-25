@@ -67,7 +67,7 @@ function App() {
       !savedGame.board.length ||
       savedGame.isOver
     ) {
-      const newGame = generateNewGame('random');
+      const newGame = generateNewGame("medium");
       localStorage.setItem("game", JSON.stringify(newGame));
       console.log(1.1)
       console.log(newGame);
