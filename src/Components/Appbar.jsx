@@ -40,7 +40,7 @@ const Appbar = () => {
           Sudoku
         </motion.div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center select-none">
         {game.isOver &&
               <motion.div 
                 className="text-5xl font-coffee mr-20"
