@@ -7,10 +7,11 @@ import { gameStateAtom } from "../atoms"
 const Appbar = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
-    <div className="border-b shadow-md rounded-lg flex justify-between">
+    <div className="border-b shadow-md rounded-lg flex justify-between select-none">
       <div className='flex items-center gap-3 m-2 ml-4'> 
         <motion.img
           src={sudokuLogo}
+          draggable = {false}
           alt="Sudoku Logo"
           className="h-[50px] w-[50px]"
           animate={{
