@@ -5,7 +5,7 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
 
 
 /**
- * Logic to remove star when highlightmoves is called
+ * Logic to remove star when highlight moves is called
  */
 
 

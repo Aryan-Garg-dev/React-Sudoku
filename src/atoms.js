@@ -39,7 +39,7 @@ export const gameStateAtom = atom({
         erasorOn: false,
 
         selectedNumber: null, // (1-9)
-        selectedSquaresForNumber: [], // (wrong sqaures selected in board to fill this number with)
+        selectedSquaresForNumber: [], // (wrong squares selected in board to fill this number with)
         validSquaresForNumber: [],
 
         selectedSquare: { r: null, c: null }, // (square selected in board to be filled)

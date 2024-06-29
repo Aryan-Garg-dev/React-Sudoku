@@ -13,7 +13,7 @@ import Label from './Label';
  * @todo 
  * timer should also be stored in game state -> X
  * time limit will be passed 
- * Progress will be seperate component (may be circular with star in them) -> X
+ * Progress will be separate component (may be circular with star in them) -> X
  * integrate timer with game state
  * on reset, reset the everything except data,
  */

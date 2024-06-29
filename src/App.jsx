@@ -39,7 +39,7 @@ function App() {
         // #notes
         makeNotes: false,
         invalidSquareForNumber: { r: null, c: null },
-        invalidNumberForSqaure: null,
+        invalidNumberForSquare: null,
         notes,
 
         selectedNumber: null,
@@ -228,7 +228,7 @@ function App() {
           if (isBoxValid && validSquares){
             validCols = validCols.filter(c=>_.range(0, 9).every(r=>game.board[r][c]!=game.selectedNumber));
             validRows = validRows.filter(r=>_.range(0, 9).every(c=>game.board[r][c]!=game.selectedNumber));
-            validSquaresForNumber = validSquaresForNumber.concat(validSquares.filter(sqaure=>validCols.includes(sqaure.c)&&validRows.includes(sqaure.r)&&!game.board[sqaure.r][sqaure.c]));
+            validSquaresForNumber = validSquaresForNumber.concat(validSquares.filter(square=>validCols.includes(square.c)&&validRows.includes(square.r)&&!game.board[square.r][square.c]));
           }
         }
       }
@@ -250,14 +250,14 @@ function App() {
         for (let r = 0; r < 9; r++){
           for (let c = 0; c < 9; c++){
             const key = `${r}-${c}`;
-            const validNumbersForSqaure = getValidNumbersForSquare(r, c);
+            const validNumbersForSquare = getValidNumbersForSquare(r, c);
             if (game.notes[key] 
               && game.notes[key].length 
-              && game.notes[key].find(num=>!validNumbersForSqaure.includes(num))
+              && game.notes[key].find(num=>!validNumbersForSquare.includes(num))
             ){
-              let newNotesArrayForSqaure = _.cloneDeep(newNotes[key]);
-              newNotesArrayForSqaure = newNotesArrayForSqaure.filter(num=>validNumbersForSqaure.includes(num))
-              newNotes[key] = newNotesArrayForSqaure;
+              let newNotesArrayForSquare = _.cloneDeep(newNotes[key]);
+              newNotesArrayForSquare = newNotesArrayForSquare.filter(num=>validNumbersForSquare.includes(num))
+              newNotes[key] = newNotesArrayForSquare;
             }
           }
         }
