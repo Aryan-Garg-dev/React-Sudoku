@@ -22,7 +22,7 @@ const NotesToggle = () => {
                     }))
                 }
             }} />
-            <div className="relative w-10 h-5 bg-[#6B8A7A] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[20px] rtl:peer-checked:after:-translate-x-[20px] after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#E8EFCF] peer-checked:after:bg-[#DAD3BE]  after:rounded-full after:h-4 after:w-4 after:transition-al peer-checked:bg-[#254336]
+            <div className="relative w-[41px] h-[21px] bg-[#6B8A7A] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[20px] rtl:peer-checked:after:-translate-x-[20px] after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#E8EFCF] peer-checked:after:bg-[#DAD3BE]  after:rounded-full after:h-4 after:w-4 after:transition-al peer-checked:bg-[#254336]
             peer-hover:after:border-2 peer-hover:after:border-[#6B8A7A] peer-hover:peer-checked:after:border-[#254336] ">
             </div>
             <div className="ms-3 text-md font-medium text-[#43766C] peer-checked:text-[#254336] font-arcade tracking-wider select-none flex items-center gap-2">
