@@ -41,7 +41,7 @@ const Appbar = () => {
           Sudoku
         </motion.div>
       </div>
-      <div className="hidden min-[821px]:flex items-center select-none">
+      <div className="max-[820px]:hidden flex items-center select-none">
         {game.isOver &&
               <motion.div 
                 className="text-5xl font-coffee mr-20"

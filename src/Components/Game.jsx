@@ -29,7 +29,7 @@ const Game = () => {
           duration: 1,
           ease: 'easeInOut'
         }}>
-          <div className="hidden min-[821px]:grid min-[821px]:grid-cols-2 mt-4">
+          <div className="max-[820px]:hidden grid grid-cols-2 mt-4">
             <div className="p-2 px-4 flex justify-center">
               <div className="flex flex-col items-center w-fit">
                 <Board />
