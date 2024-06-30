@@ -55,7 +55,7 @@ const Board = () => {
                         >
                             <div 
                                 className={`
-                                    relative border flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:h-9 max-sm:w-9 cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium border-gray-400
+                                    relative border flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium border-gray-400
                                     ${game.isRunning || game.isOver
                                         ? (
                                             game.board.length && game.board[r][c]
@@ -74,10 +74,10 @@ const Board = () => {
                                                                 ? 'bg-red-100 text-gray-800'
                                                                 :  highlightValidMovesForNumber(r, c)
                                                                     ? 'bg-[#FEFFD2] border-1 border-orange-300'
-                                                                    : 'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400'
+                                                                    : 'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400 bg-white'
                                             
                                             )
-                                        : 'hover:bg-slate-100'
+                                        : 'hover:bg-slate-100 bg-yellow-50'
                                     }
                                 `} 
                                         

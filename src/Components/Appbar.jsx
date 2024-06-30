@@ -7,7 +7,7 @@ import { gameStateAtom } from "../atoms"
 const Appbar = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
-    <div className="border-b shadow-md rounded-lg flex justify-between select-none">
+    <div className="border-b shadow-md rounded-lg flex justify-between select-none bg-[#FFEEA9]">
       <div className='flex items-center gap-3 m-2 ml-4'> 
         <motion.img
           src={sudokuLogo}
@@ -41,7 +41,7 @@ const Appbar = () => {
           Sudoku
         </motion.div>
       </div>
-      <div className="flex items-center select-none">
+      <div className="hidden min-[820px]:flex items-center select-none">
         {game.isOver &&
               <motion.div 
                 className="text-5xl font-coffee mr-20"
