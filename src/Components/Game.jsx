@@ -17,7 +17,7 @@ const Game = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
     <div>
-       <div className="h-screen max-[820px]:h-full w-full bg-[#FEFFD2]">
+       <div className="h-screen w-full bg-[#FEFFD2]">
         <Appbar />
         <motion.div
         initial = {{ opacity: 0 }}
@@ -29,7 +29,7 @@ const Game = () => {
           duration: 1,
           ease: 'easeInOut'
         }}>
-          <div className="max-[820px]:hidden min-[820px]:grid min-[820px]:grid-cols-2 mt-4">
+          <div className="hidden min-[821px]:grid min-[821px]:grid-cols-2 mt-4">
             <div className="p-2 px-4 flex justify-center">
               <div className="flex flex-col items-center w-fit">
                 <Board />
