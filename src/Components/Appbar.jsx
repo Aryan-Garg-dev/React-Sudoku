@@ -8,7 +8,7 @@ const Appbar = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
     <div className="border-b shadow-md rounded-lg flex justify-between select-none bg-[#FFEEA9]">
-      <div className='flex items-center gap-3 m-2 ml-4'> 
+      <div className='flex items-center gap-8 m-2 ml-4'> 
         <motion.img
           src={sudokuLogo}
           draggable = {false}

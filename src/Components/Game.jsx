@@ -29,15 +29,15 @@ const Game = () => {
           duration: 1,
           ease: 'easeInOut'
         }}>
-          <div className="max-[820px]:hidden min-[820px]:grid min-[820px]:grid-cols-2">
-            <div className="p-2 px-4">
+          <div className="max-[820px]:hidden min-[820px]:grid min-[820px]:grid-cols-2 mt-4">
+            <div className="p-2 px-4 flex justify-center">
               <div className="flex flex-col items-center w-fit">
                 <Board />
                 <Numbers />
               </div>
             </div>
-            <div>
-              <div className="flex flex-col gap-4 pt-2 first:mb-2">
+            <div className="flex justify-center">
+              <div className="flex flex-col gap-4 pt-2 first:mb-2 mt-2">
                 <Rating rating={game.rating} size={32} />
                 <Timer />
                 <Difficulty />
@@ -47,8 +47,8 @@ const Game = () => {
                   <div className="mb-1"><Erasor /></div>
                 </div>
                 <Errors />
+                <NewGameButton />
               </div>
-              <div className="mt-5"><NewGameButton /></div>
             </div>
           </div>
           <div className="hidden max-[820px]:flex w-full px-10 flex-col items-center py-1">
