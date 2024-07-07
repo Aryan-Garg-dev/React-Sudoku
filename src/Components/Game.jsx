@@ -17,7 +17,7 @@ const Game = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
     <div>
-       <div className="h-screen w-full bg-[#FEFFD2]">
+       <div className="h-full w-full min-h-screen bg-[#FEFFD2]">
         <Appbar />
         <motion.div
         initial = {{ opacity: 0 }}
@@ -29,6 +29,8 @@ const Game = () => {
           duration: 1,
           ease: 'easeInOut'
         }}>
+
+          {/* Large Screen Layout */}
           <div className="max-[820px]:hidden grid grid-cols-2 mt-4">
             <div className="p-2 px-4 flex justify-center">
               <div className="flex flex-col items-center w-fit">
@@ -37,7 +39,7 @@ const Game = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="flex flex-col gap-4 pt-2 first:mb-2 mt-2">
+              <div className="flex flex-col gap-4 pt-2 first:mb-2 mt-2 border-4 border-[#FFD18E] rounded-xl p-4 shadow-lg bg-[#FFF2D7]">
                 <Rating rating={game.rating} size={32} />
                 <Timer />
                 <Difficulty />
@@ -51,6 +53,8 @@ const Game = () => {
               </div>
             </div>
           </div>
+
+          {/* Small Screen Layout */}
           <div className="hidden max-[820px]:flex w-full px-10 flex-col items-center py-1">
             <div className="w-fit flex flex-col gap-2">
             <div className="w-full flex justify-around items-center">
@@ -72,6 +76,7 @@ const Game = () => {
             </div>
             </div>
           </div>
+          
         </motion.div>
         {/* New Game Button */}
           {/* <Timer /> */}
@@ -80,5 +85,6 @@ const Game = () => {
     </div>
   )
 }
+
 
 export default Game

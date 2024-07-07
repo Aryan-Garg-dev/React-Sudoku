@@ -1,9 +1,4 @@
 import { atom } from 'recoil'
-// import { createNewGame } from './functions'
-
-// const { data, board, solution } = createNewGame();
-
-// const { data, board, solution } = JSON.parse(localStorage.getItem('game'));
 
 export const gameStateAtom = atom({
     key: 'gameStateAtom',
@@ -33,9 +28,9 @@ export const gameStateAtom = atom({
 
         // #notes
         makeNotes: false,
-        invalidSquareForNumber: { r: null, c: null },
-        invalidNumberForSqaure: null,
-        notes: {},
+        invalidSquareForNumber: { r: null, c: null }, //(sqaure that can't hold the note for selected number)
+        invalidNumberForSqaure: null, //(number that can't be noted on the sqaure)
+        notes: {}, // (notes object of format R-C: [numbers])
         erasorOn: false,
 
         selectedNumber: null, // (1-9)
