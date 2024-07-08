@@ -191,7 +191,7 @@ const Board = () => {
                                     : ''
                                 }
                                 {/* Template fot notes component */}
-                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && <div className='absolute grid grid-cols-3 grid-rows-3 text-[10px] lg:h-12 lg:w-12 h-10 w-10 mb-6 p-1.5 gap-2 text-gray-600'>
+                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && <div className='absolute grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] lg:h-12 lg:w-12 h-10 w-10 mb-6 p-1.5 gap-2 text-gray-600'>
                                     {/* notes[r][c].map(num=>) */}
                                     {_.range(1, 10).map((num, index)=>{
                                         if (game.notes[`${r}-${c}`] && game.notes[`${r}-${c}`].length && game.notes[`${r}-${c}`].includes(num)){
