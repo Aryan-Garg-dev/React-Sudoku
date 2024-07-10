@@ -117,6 +117,7 @@ function App() {
     if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
       new Audio(GameStartAudio).play();
       generateNewGame(game.selectedDifficulty);
+      setGame(game=>({...game, isRunning: true}))
     }
   }, [game.selectedDifficulty, generateNewGame, game.data.difficulty, game.board.length]);
 

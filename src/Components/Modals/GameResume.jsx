@@ -75,7 +75,7 @@ const GameResume = ({ setClosed }) => {
           <div className="border-2 border-[#3C2A21] rounded-full shadow-sm shadow-gray-700 bg-[#E5E5CB] active:translate-y-0.5 active:shadow-none" onClick={()=>setClosed(true)}><IoClose size={30} color={'#1A120B'} /></div>
         </div>
         <div className="h-full flex flex-col items-center justify-center gap-10 pb-5">
-          <div className="text-[#1A5319] text-4xl w-full px-16 text-center my-4 font-kghappy text-wrap">Welcome, back!!!</div>
+          <div className="text-[#1A5319] text-5xl w-full px-16 text-center my-4 font-kghappy text-wrap">Welcome, back!!!</div>
           <div className="px-4 py-2 border-4 border-[#1A5319] text-4xl text-[#254336] rounded-xl font-roadrage bg-[#F1F8E8] shadow-md shadow-gray-700 active:translate-y-0.5 active:shadow-none"
           onClick={()=>{
             setGame(game=>({...game, isRunning: true}))
