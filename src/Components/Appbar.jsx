@@ -19,7 +19,7 @@ const Appbar = () => {
             scale: [0, 1] 
           }}
           transition={{
-            duration: 1, 
+            duration: 0.8, 
             // ease: "easeIn", 
             repeat: 0, 
             repeatType: "loop",

@@ -26,7 +26,7 @@ function App() {
         board,
         solution,
 
-        isRunning: true,
+        isRunning: false,
         isOver: false,
         hasWon: false,
         rating: 5,
@@ -74,7 +74,7 @@ function App() {
     } else {
       setGame({
         ...savedGame,
-        isRunning: true,
+        isRunning: false,
       });
     }
   }, [setGame, generateNewGame]);

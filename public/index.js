@@ -16,5 +16,5 @@ export {
     ErrorAudio,
     GameLostAudio,
     GameWonAudio,
-    GameStartAudio
+    GameStartAudio,
 }

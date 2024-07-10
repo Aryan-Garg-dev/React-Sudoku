@@ -1,4 +1,5 @@
 import { useRecoilValue } from "recoil"
+import { useState } from 'react'
 import Appbar from "./Appbar"
 import Board from "./Board"
 import Difficulty from "./Difficulty"
@@ -12,11 +13,13 @@ import NotesToggle from "./NotesToggle"
 import Erasor from "./Erasor"
 import { motion } from "framer-motion"
 import NewGameButton from "./NewGameButton"
+import GameResume from './Modals/GameResume';
 
 const Game = () => {
   const game = useRecoilValue(gameStateAtom);
+  const [resumeGameClosed, setResumeGameClosed] = useState(game.isRunning);
   return (
-    <div>
+    <div className="relative">
        <div className="h-full w-full min-h-screen bg-[#FEFFD2]">
         <Appbar />
         <motion.div
@@ -77,12 +80,11 @@ const Game = () => {
             </div>
             </div>
           </div>
-          
         </motion.div>
         {/* New Game Button */}
           {/* <Timer /> */}
-          {/* {game.isOver && <GameOver />} */}
         </div>
+        {!resumeGameClosed && <GameResume setClosed={setResumeGameClosed} />}
     </div>
   )
 }
