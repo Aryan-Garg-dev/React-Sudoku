@@ -194,16 +194,18 @@ const Board = () => {
                                     : ''
                                 }
                                 {/* Template fot notes component */}
-                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && <div className='absolute grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] max-sm:text-[7px] lg:h-12 lg:w-12 h-10 w-10 mb-6 max-sm:mb-7 p-1.5 gap-2 text-gray-600'>
-                                    {/* notes[r][c].map(num=>) */}
-                                    {_.range(1, 10).map((num, index)=>{
-                                        if (game.notes[`${r}-${c}`] && game.notes[`${r}-${c}`].length && game.notes[`${r}-${c}`].includes(num)){
-                                            return <div key={index}>{num}</div>
-                                        } else {
-                                            return <div key={index}></div>
-                                        }
-                                    })}
-                                </div>}
+                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && (
+                                    <div className='absolute inset-0 grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] max-sm:text-[7px] text-gray-600 z-10 w-full h-full align-middle text-center'>
+                                        {_.range(1, 9).map((num, index) => (
+                                        <div
+                                            key={index}
+                                            className='flex items-center justify-center w-full h-full'
+                                        >
+                                            {game.notes[`${r}-${c}`] && game.notes[`${r}-${c}`].includes(num) ? num : null}
+                                        </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
