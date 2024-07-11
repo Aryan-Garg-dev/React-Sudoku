@@ -60,7 +60,7 @@ const Game = () => {
           </div>
 
           {/* Small Screen Layout */}
-          <div className="hidden max-[820px]:flex w-full px-10 flex-col items-center py-1 mb-1">
+          <div className="hidden max-[820px]:flex w-full px-10 flex-col items-center py-1 mb-2">
             <div className="w-fit flex flex-col gap-2">
               <div className="w-full flex max-sm:flex-col justify-around items-center">
                 <Rating rating={game.rating} size={36} />
@@ -69,7 +69,7 @@ const Game = () => {
                   <div className="max-sm:block hidden"><NewGameButton /></div>
                 </div>
               </div>
-              <div className="flex w-full justify-around items-center">
+              <div className="flex w-full h-fit justify-around items-center">
                 <Mobile><Errors /></Mobile>
                 <Mobile><Timer /></Mobile>
               </div>

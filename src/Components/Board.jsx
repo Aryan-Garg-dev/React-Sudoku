@@ -34,7 +34,7 @@ const Board = () => {
     <div 
     className={`relative w-fit h-fit border-[6px] max-sm:border-[2.5px] m-2 mb-3 ${!game.isRunning 
         ? 'border-gray-700'
-        : 'border-gray-900 shadow-md shadow-gray-500'} rounded-lg max-sm:rounded select-none`}
+        : 'border-gray-900 shadow-md max-sm:shadow-sm shadow-gray-500'} rounded-lg max-sm:rounded select-none`}
     >
         <div 
             className={`relative w-fit border-2 max-sm:border-[0.5px] flex flex-col

@@ -104,7 +104,7 @@ const Numbers = () => {
                                     selectedSquaresForNumber: [],
     
                                     // #notes
-                                    invalidNumberForSqaure: null,
+                                    invalidSquareForNumber: { r: null, c: null },
                                 })
                             } else {
                                 setGame({
@@ -114,7 +114,7 @@ const Numbers = () => {
                                     validSquaresForNumber: [],
     
                                     // #notes
-                                    invalidNumberForSqaure: null,
+                                    invalidSquareForNumber: { r: null, c: null },
                                 })
                             }
                         }
