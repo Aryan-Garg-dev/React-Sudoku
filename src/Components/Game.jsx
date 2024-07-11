@@ -61,23 +61,23 @@ const Game = () => {
           {/* Small Screen Layout */}
           <div className="hidden max-[820px]:flex w-full px-10 flex-col items-center py-1">
             <div className="w-fit flex flex-col gap-2">
-            <div className="w-full flex justify-around items-center">
-              <Rating rating={game.rating} size={36} />
-              <Difficulty />
-            </div>
-            <div className="flex w-full justify-around">
-              <Errors />
-              <Timer />
-            </div>
-            <div className="w-fit flex flex-col items-center">
-              <Board />
-              <Numbers />
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Highlight />
-              <NotesToggle />
-              <NewGameButton />
-            </div>
+              <div className="w-full flex justify-around items-center">
+                <Rating rating={game.rating} size={36} />
+                <Difficulty />
+              </div>
+              <div className="flex w-full justify-around">
+                <Errors />
+                <Timer />
+              </div>
+              <div className="w-fit flex flex-col items-center">
+                <Board />
+                <Numbers />
+              </div>
+              <div className="flex flex-col items-center gap-4">
+                <Highlight />
+                <NotesToggle />
+                <NewGameButton />
+              </div>
             </div>
           </div>
         </motion.div>
