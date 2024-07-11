@@ -166,7 +166,7 @@ const Board = () => {
                                                     }
                                                 }
                                             } else {
-                                                if (!game.board[r][c]){
+                                                if (!game.board[r][c] && !game.selectedSquaresForNumber.find(square => square.r === r && square.c === c)){
                                                     if (game.solution[r][c]!=game.selectedNumber){
                                                         setGame({
                                                             ...game,
