@@ -166,19 +166,21 @@ const Board = () => {
                                                     }
                                                 }
                                             } else {
-                                                if (game.solution[r][c]!=game.selectedNumber){
-                                                    setGame({
-                                                        ...game,
-                                                        selectedSquaresForNumber: [...game.selectedSquaresForNumber,    { r, c }],
-                                                        errorCount: game.errorCount + 1
-                                                    })
-                                                } else {
-                                                    const newBoard = _.cloneDeep(game.board);
-                                                    newBoard[r][c] = game.selectedNumber;
-                                                    setGame({
-                                                        ...game,
-                                                    board: newBoard,
-                                                    })
+                                                if (!game.board[r][c]){
+                                                    if (game.solution[r][c]!=game.selectedNumber){
+                                                        setGame({
+                                                            ...game,
+                                                            selectedSquaresForNumber: [...game.selectedSquaresForNumber,    { r, c }],
+                                                            errorCount: game.errorCount + 1
+                                                        })
+                                                    } else {
+                                                        const newBoard = _.cloneDeep(game.board);
+                                                        newBoard[r][c] = game.selectedNumber;
+                                                        setGame({
+                                                            ...game,
+                                                            board: newBoard,
+                                                        })
+                                                    }
                                                 }
                                             }
                                         }
