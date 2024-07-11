@@ -64,7 +64,10 @@ const Game = () => {
             <div className="w-fit flex flex-col gap-2">
               <div className="w-full flex max-sm:flex-col justify-around items-center">
                 <Rating rating={game.rating} size={36} />
-                <Difficulty />
+                <div className="flex items-center gap-2">
+                  <Difficulty />
+                  <div className="max-sm:block hidden"><NewGameButton /></div>
+                </div>
               </div>
               <div className="flex w-full justify-around items-center">
                 <Mobile><Errors /></Mobile>
@@ -77,7 +80,7 @@ const Game = () => {
               <div className="flex flex-col items-center gap-4">
                 <Mobile className={'max-sm:mt-2'}><Highlight /></Mobile>
                 <NotesToggle />
-                <NewGameButton />
+                <div className="max-sm:hidden block"><NewGameButton /></div>
               </div>
             </div>
           </div>
