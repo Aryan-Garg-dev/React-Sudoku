@@ -59,13 +59,13 @@ const Timer = () => {
   return (
     <div className='w-fit'>
       <Label text={'Timer'} />
-      <div className='flex gap-2 text-center w-fit mb-2'>
+      <div className='flex gap-2 text-center w-fit mb-2 max-sm:mr-1 max-sm:px-1'>
         <div className="text-xl font-kghappy font-thin py-1 w-auto text-[#9B3922] flex justify-center items-center min-w-28 cursor-default select-none">{formatTime(game.timeSpentInSec)}</div>
           <div className="flex justify-center items-center gap-2 py-1">
             <div className='relative'>
               { !game.isRunning 
                 ? <button
-                    className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-green-600 hover:text-white outline-none"
+                    className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded sm:hover:bg-green-600 sm:hover:text-white outline-none"
                     onClick={() => { 
                       if (!game.isOver){
                         setGame({
@@ -78,7 +78,7 @@ const Timer = () => {
                     <FaPlay size={12} />
                   </button>
                 : <button
-                  className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-red-600 hover:text-white outline-none"
+                  className="peer w-fit h-fit p-2 text-[#6B240C] bg-[#F2ECBE] rounded sm:hover:bg-red-600 sm:hover:text-white outline-none"
                   onClick={() =>{
                     setGame({
                       ...game,
@@ -88,18 +88,18 @@ const Timer = () => {
                     <FaPause size={12} />
                   </button>
               }
-              <label className='hidden absolute peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>{game.isRunning ? 'Pause' : 'Resume'}</label>
+              <label className='hidden absolute sm:peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>{game.isRunning ? 'Pause' : 'Resume'}</label>
             </div>
             <div className='relative'>
               <div className='peer flex justify-center items-center'>
                 <button
-                className="w-fit h-fit p-[5px] text-[#6B240C] bg-[#F2ECBE] rounded hover:bg-blue-600 hover:text-white outline-none"
+                className="w-fit h-fit p-[5px] text-[#6B240C] bg-[#F2ECBE] rounded sm:hover:bg-blue-600 sm:hover:text-white outline-none"
                 onClick={resetGame}
                 >
                   <VscDebugRestart size={18} />
                 </button>
               </div>
-              <label className='hidden absolute peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>Reset</label>
+              <label className='hidden absolute sm:peer-hover:block px-1.5 py-1 rounded border-2 shadow-sm shadow-gray-400 mt-1 border-red-800 bg-[#F5E7B2] font-playwrite text-xs font-semibold text-[#6C3428]'>Reset</label>
             </div>
           </div>
       </div>

@@ -26,7 +26,7 @@ function App() {
         board,
         solution,
 
-        isRunning: true,
+        isRunning: false,
         isOver: false,
         hasWon: false,
         rating: 5,
@@ -74,7 +74,7 @@ function App() {
     } else {
       setGame({
         ...savedGame,
-        isRunning: true,
+        isRunning: false,
       });
     }
   }, [setGame, generateNewGame]);
@@ -117,6 +117,7 @@ function App() {
     if (game.selectedDifficulty && game.selectedDifficulty != game.data.difficulty && game.board.length) {
       new Audio(GameStartAudio).play();
       generateNewGame(game.selectedDifficulty);
+      setGame(game=>({...game, isRunning: true}))
     }
   }, [game.selectedDifficulty, generateNewGame, game.data.difficulty, game.board.length]);
 

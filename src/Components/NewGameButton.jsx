@@ -55,11 +55,11 @@ const NewGameButton = () => {
   );
 
   return (
-    <div className="w-fit" onClick={()=>{
+    <div className="w-fit mt-1" onClick={()=>{
         NewGameAudio.play();
         generateNewGame(game.selectedDifficulty);
       }}>
-        <div className="w-full min-w-32 py-1 px-5 rounded-xl mb-1.5 border-[3px] border-[#254336] text-[#254336] bg-[#E8EFCF] font-roadrage text-xl text-center shadow-sm shadow-gray-700 cursor-auto select-none active:translate-y-0.5">New Game</div>
+        <div className="w-full min-w-40 py-1 px-5 rounded-xl border-[3px] border-[#254336] text-[#254336] bg-[#E8EFCF] font-roadrage text-xl max-sm:text-lg text-center shadow-sm shadow-gray-700 cursor-auto select-none active:translate-y-0.5">New Game</div>
     </div>
   )
 }

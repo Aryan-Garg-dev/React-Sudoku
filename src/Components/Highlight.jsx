@@ -9,7 +9,7 @@ const Highlight = () => {
   return (
     <div className="w-fit">
         <Label text={'Highlight'} />
-        <div className="flex gap-3 mt-1">
+        <div className="flex gap-3 mt-1 max-sm:px-2">
             <Toggle text={'Sqaures'} checked={game.highlightSquares} onClick={()=>{
                 setGame(game=>({
                 ...game,

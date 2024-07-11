@@ -8,25 +8,25 @@ const Appbar = () => {
   const game = useRecoilValue(gameStateAtom);
   return (
     <div className="border-b shadow-md rounded-lg flex justify-between select-none bg-[#FFEEA9]">
-      <div className='flex items-center gap-8 m-2 ml-4'> 
+      <div className='flex items-center gap-8 m-2 ml-4 max-sm:m-1 max-sm:ml-2'> 
         <motion.img
           src={sudokuLogo}
           draggable = {false}
           alt="Sudoku Logo"
-          className="h-[50px] w-[50px]"
+          className="h-[50px] w-[50px] max-sm:h-[45px] max-sm:w-[45px]"
           animate={{
             x: [-100, 0],
             scale: [0, 1] 
           }}
           transition={{
-            duration: 1, 
+            duration: 0.8, 
             // ease: "easeIn", 
             repeat: 0, 
             repeatType: "loop",
           }}
         />
         <motion.div
-          className={`text-5xl font-zerovel select-none text-gray-900`}
+          className={`text-4xl font-zerovel select-none text-gray-900`}
           animate={{
             x: [-200, 0],
             scale: [0, 1]

@@ -32,12 +32,12 @@ const Board = () => {
 
    return (
     <div 
-    className={`relative w-fit h-fit border-[6px] m-2 mb-3 ${!game.isRunning 
+    className={`relative w-fit h-fit border-[6px] max-sm:border-[2.5px] m-2 mb-3 ${!game.isRunning 
         ? 'border-gray-700'
-        : 'border-gray-900 shadow-md shadow-gray-500'} rounded-lg select-none`}
+        : 'border-gray-900 shadow-md max-sm:shadow-sm shadow-gray-500'} rounded-lg max-sm:rounded select-none`}
     >
         <div 
-            className={`relative w-fit border-2 flex flex-col
+            className={`relative w-fit border-2 max-sm:border-[0.5px] flex flex-col
                 ${!game.isRunning
                     ? 'border-gray-400 '
                     : 'border-gray-500 '
@@ -48,14 +48,14 @@ const Board = () => {
                 <div className='flex' key={r}>
                     {_.times(9, c=>(
                         <div className={`relative w-fit h-fit
-                            ${(c == 2 || c == 5) && `border-r-2 ${game.isRunning ? 'border-r-gray-700' : 'border-r-gray-600'}`}
-                            ${(r == 2 || r == 5) && `border-b-2 ${game.isRunning ? 'border-b-gray-700' : 'border-b-gray-600'}`}
+                            ${(c == 2 || c == 5) && `border-r-2 max-sm:border-r ${game.isRunning ? 'border-r-gray-700' : 'border-r-gray-600'}`}
+                            ${(r == 2 || r == 5) && `border-b-2 max-sm:border-b ${game.isRunning ? 'border-b-gray-700' : 'border-b-gray-600'}`}
                         `}
                         key={`${r}_${c}`}
                         >
                             <div 
                                 className={`
-                                    relative border flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium border-gray-400
+                                    relative border max-sm:border-[0.5px] flex justify-center items-center lg:h-12 lg:w-12 h-10 w-10 max-sm:w-[38px] max-sm:h-[38px] cursor-pointer lg:text-xl text-lg pt-1 font-playwrite font-medium border-gray-400
                                     ${game.isRunning || game.isOver
                                         ? (
                                             game.board.length && game.board[r][c]
@@ -65,7 +65,7 @@ const Board = () => {
                                                         ?'bg-[#95D2B3]'
                                                         : 'bg-slate-200 hover:bg-slate-200 text-gray-800' 
                                                 : highlightSelectedSqaure(r, c)
-                                                    ? 'bg-slate-100 border-[4px] border-[#344C64] text-gray-800'
+                                                    ? 'bg-slate-100 border-[3.5px] max-sm:border-[2px] max-sm:hover:border-[2px] border-[#344C64] text-gray-800'
                                                     : highlightRowColBox(r, c)  
                                                         ? 'bg-[#D8EFD3]'        
                                                         : isWrongSqaureForSelectedNumber(r, c)
@@ -74,7 +74,7 @@ const Board = () => {
                                                                 ? 'bg-red-100 text-gray-800'
                                                                 :  highlightValidMovesForNumber(r, c)
                                                                     ? 'bg-[#FEFFD2] border-1 border-orange-300'
-                                                                    : 'hover:bg-slate-100 text-gray-800 hover:border-2 hover:border-gray-400 bg-white'
+                                                                    : 'hover:bg-slate-100 text-gray-800 hover:border-2 max-sm:hover:border-[1px] hover:border-gray-400 bg-white'
                                             
                                             )
                                         : 'hover:bg-slate-100 bg-yellow-50'
@@ -166,6 +166,7 @@ const Board = () => {
                                                     }
                                                 }
                                             } else {
+                                                // notes is off, sqaure is being selected for number
                                                 if (!game.board[r][c] && !game.selectedSquaresForNumber.find(square => square.r === r && square.c === c)){
                                                     if (game.solution[r][c]!=game.selectedNumber){
                                                         setGame({
@@ -193,16 +194,18 @@ const Board = () => {
                                     : ''
                                 }
                                 {/* Template fot notes component */}
-                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && <div className='absolute grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] lg:h-12 lg:w-12 h-10 w-10 mb-6 p-1.5 gap-2 text-gray-600'>
-                                    {/* notes[r][c].map(num=>) */}
-                                    {_.range(1, 10).map((num, index)=>{
-                                        if (game.notes[`${r}-${c}`] && game.notes[`${r}-${c}`].length && game.notes[`${r}-${c}`].includes(num)){
-                                            return <div key={index}>{num}</div>
-                                        } else {
-                                            return <div key={index}></div>
-                                        }
-                                    })}
-                                </div>}
+                                {game.notes && game.isRunning && game.board.length && !game.board[r][c] && (
+                                    <div className='absolute inset-0 grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] max-sm:text-[7px] text-gray-600 z-10 w-full h-full align-middle text-center'>
+                                        {_.range(1, 9).map((num, index) => (
+                                        <div
+                                            key={index}
+                                            className='flex items-center justify-center w-full h-full'
+                                        >
+                                            {game.notes[`${r}-${c}`] && game.notes[`${r}-${c}`].includes(num) ? num : null}
+                                        </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
