@@ -59,7 +59,7 @@ const Timer = () => {
   return (
     <div className='w-fit'>
       <Label text={'Timer'} />
-      <div className='flex gap-2 text-center w-fit mb-2'>
+      <div className='flex gap-2 text-center w-fit mb-2 max-sm:mr-1 max-sm:px-1'>
         <div className="text-xl font-kghappy font-thin py-1 w-auto text-[#9B3922] flex justify-center items-center min-w-28 cursor-default select-none">{formatTime(game.timeSpentInSec)}</div>
           <div className="flex justify-center items-center gap-2 py-1">
             <div className='relative'>

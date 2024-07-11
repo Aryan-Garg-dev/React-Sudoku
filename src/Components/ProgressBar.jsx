@@ -12,12 +12,14 @@ const ProgressBar = () => {
   };
 
   return (
-    <div className='h-3 w-full bg-[#F5E7B2] rounded-full flex items-center'>
+    <div className="max-sm:mr-1">
+    <div className='h-3 max-sm:h-[10px] w-full bg-[#F5E7B2] rounded-full flex items-center'>
       <div
-        className='h-3 rounded-full bg-gradient-to-r from-[#C08B5C] from-30% via-[#795458] via-60% to-[#453F78] to-90% '
+        className='h-3 max-sm:h-[10px] rounded-full bg-gradient-to-r from-[#C08B5C] from-30% via-[#795458] via-60% to-[#453F78] to-90% '
         style={{ width : calculateWidth() }} 
         >          
       </div>
+    </div>
     </div>
   )
 }
