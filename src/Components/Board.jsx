@@ -196,7 +196,7 @@ const Board = () => {
                                 {/* Template fot notes component */}
                                 {game.notes && game.isRunning && game.board.length && !game.board[r][c] && (
                                     <div className='absolute inset-0 grid grid-cols-3 grid-rows-3 lg:text-[10px] text-[8px] max-sm:text-[7px] text-gray-600 z-10 w-full h-full align-middle text-center'>
-                                        {_.range(1, 9).map((num, index) => (
+                                        {_.range(1, 10).map((num, index) => (
                                         <div
                                             key={index}
                                             className='flex items-center justify-center w-full h-full'
