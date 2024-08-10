@@ -26,7 +26,7 @@ const Appbar = () => {
           }}
         />
         <motion.div
-          className={`text-4xl font-zerovel select-none text-gray-900`}
+          className={`text-5xl max-sm:text-4xl font-zerovel select-none text-gray-900`}
           animate={{
             x: [-200, 0],
             scale: [0, 1]

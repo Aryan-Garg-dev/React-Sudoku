@@ -24,7 +24,7 @@ const Numbers = () => {
                                     ? 'border-2 max-sm:border border-gray-300 bg-gray-200 shadow-none text-gray-600'
                                     : game.selectedNumber == index+1
                                         ? 'shadow-none border-2 max-sm:border bg-slate-700 border-slate-600 text-white active:translate-y-0.5'
-                                        :'border-2 max-sm:border shadow-slate-600 border-gray-500 hover:border-gray-600 sm:hover:bg-slate-200 active:shadow-none bg-white'
+                                        :'border-2 max-sm:border shadow-slate-600 border-gray-500 hover:border-gray-600 sm:hover:bg-slate-200 active:shadow-none bg-white active:translate-y-0.5'
                     )
                     : 'border-2 max-sm:border border-gray-300 bg-gray-200 shadow-none text-gray-600'
                 }
