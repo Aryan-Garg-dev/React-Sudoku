@@ -44,7 +44,7 @@ const Appbar = () => {
       <div className="max-[820px]:hidden flex items-center select-none">
         {game.isOver &&
               <motion.div 
-                className="text-5xl font-coffee mr-20"
+                className="text-5xl font-mickey mr-20"
                 animate = {{
                   scale: [1, 1.15, 1, 0.85, 1]
                 }}
