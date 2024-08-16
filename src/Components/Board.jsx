@@ -74,7 +74,9 @@ const Board = () => {
                                                                 ? 'bg-red-100 text-gray-800'
                                                                 :  highlightValidMovesForNumber(r, c)
                                                                     ? 'bg-[#FEFFD2] border-1 border-orange-300'
-                                                                    : 'hover:bg-slate-100 text-gray-800 hover:border-2 max-sm:hover:border-[1px] hover:border-gray-400 bg-white'
+                                                                    : Object.values(game.notes)[r*9+c].includes(game.selectedNumber)
+                                                                        ? 'bg-green-100'
+                                                                        : 'hover:bg-slate-100 text-gray-800 hover:border-2 max-sm:hover:border-[1px] hover:border-gray-400 bg-white'
                                             
                                             )
                                         : 'hover:bg-slate-100 bg-yellow-50'
