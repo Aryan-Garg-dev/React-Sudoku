@@ -1,0 +1,14 @@
+{
+  "name": "Sudoku",
+  "short_name": "Sudoku",
+  "description": "Fun Sudoku Game",
+  "display": "standalone",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "/sudokuMono.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
