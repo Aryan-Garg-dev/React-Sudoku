@@ -46,6 +46,7 @@ const NewGameButton = () => {
         validNumbersForSquare: [],
 
         disabledNumbers: [],
+        isNewGame: true,
 
       };
       setGame(newGame);

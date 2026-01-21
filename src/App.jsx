@@ -52,6 +52,7 @@ function App() {
         validNumbersForSquare: [],
 
         disabledNumbers: [],
+        isNewGame: true,
 
       };
       setGame(newGame);
@@ -74,6 +75,7 @@ function App() {
     } else {
       setGame({
         ...savedGame,
+        isNewGame: savedGame.isOver,
         isRunning: false,
       });
     }

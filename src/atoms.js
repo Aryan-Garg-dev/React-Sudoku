@@ -47,5 +47,6 @@ export const gameStateAtom = atom({
         //     rating: 1, //player rating
         //     totalGamesPlayed: 0,
         // }
+        isNewGame: true
     }
 })
